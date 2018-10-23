@@ -9,20 +9,29 @@ class Individual():
         schedule - an array of events and pilots
         fitness - the penalty score of this individual
     """
-    def __init__(self, schedule: List[EventGene] = None):
+    def __init__(self, schedule: List[EventGene] = None) -> None:
         if schedule:
             self.schedule = schedule
         else:
-            # randomly gen schedule
-            pass
+            self.schedule = []
         self.fitness = 0
 
     @property
-    def fitness(self):
+    def schedule(self) -> List[EventGene]:
+        return self._schedule
+
+    @schedule.setter
+    def schedule(self, schedule: List[EventGene]):
+        self._schedule = schedule
+
+    @property
+    def fitness(self) -> int:
         return self._fitness
 
     @fitness.setter
     def fitness(self, fitness: int):
+        if fitness < 0:
+            fitness = 0
         self._fitness = fitness
 
     def __lt__(self, other):
