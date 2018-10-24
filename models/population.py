@@ -1,12 +1,15 @@
 from typing import List
 from bisect import insort
 from models.individual import Individual
+from models.pilot import Pilot
+from models.event_gene import EventGene
 from ga.fitness import calc_fitness
 from ga.operators import roulette_selection, create_and_mutate_offspring
 
 class Population():
 
-    def __init__(self, size: int, elite_percent: int):
+    def __init__(self, size: int, elite_percent: int, sched: List[EventGene],
+                 sched_alleles: List[Pilot]):
         """
         Creates a list of random individuals as the population
         """
@@ -14,9 +17,10 @@ class Population():
             raise ValueError("elite_percent must be between 0 and 100")
 
         self.size = size
-        self.population = [Individual() for i in range(self.size)] # list of random individuals
+        self.population = [Individual(sched, sched_alleles) for i in range(self.size)] # list of random individuals
         self.elite_size = int(elite_percent * self.size)
         self.elites: List[Individual] = []
+        self.sched_alleles = sched_alleles
         self.max_fitness = 0
 
     @property
@@ -54,6 +58,14 @@ class Population():
     @elite_size.setter
     def elite_size(self, elite_size):
         self._elite_size = elite_size
+
+    @property
+    def sched_alleles(self):
+        return self._sched_alleles
+
+    @sched_alleles.setter
+    def sched_alleles(self, sched_alleles):
+        self._sched_alleles = sched_alleles
 
     def merge_and_set_populations(self, pop1: List[Individual], pop2: List[Individual]):
         if len(pop1) + len(pop2) != self.size:
@@ -104,4 +116,3 @@ class Population():
         children = create_and_mutate_offspring(parents, points=2, mutate_prob=0.1)
         # calc offspring fitness
         # merge elites and offspring into new population
-        pass

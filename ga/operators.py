@@ -2,7 +2,7 @@ import random as rnd
 from typing import List, Tuple
 from bisect import insort
 from models.individual import Individual
-from models.eventGene import EventGene
+from models.event_gene import EventGene
 
 # operates on population as a list of individuals
 
@@ -20,16 +20,16 @@ def roulette_selection(population: List[Individual]) -> Individual:
     # if we don't get a value, return the last item. this should be exceedingly rare.
     return population[len(population) - 1]
 
-def create_and_mutate_offspring(parents: List[Individual], points: int,
+def create_and_mutate_offspring(parents: List[Individual],
+                                points: int,
                                 mutate_prob: float) -> List[Individual]:
     children: List[Individual] = []
     for i in range(0, len(parents), 2):
         # if theres an odd number, use the first parent again
         j = i + 1 if i + 1 < len(parents) else 0
         child1, child2 = crossover(parents[i], parents[j], points)
-        children.append(child1)
-        children.append(child2)
-        # TODO mutate
+        children.append(mutate(child1, mutate_prob))
+        children.append(mutate(child2, mutate_prob))
     return children
 
 def crossover(parent1: Individual, parent2: Individual, pnts: int) -> Tuple[Individual, Individual]:
@@ -54,11 +54,14 @@ def crossover(parent1: Individual, parent2: Individual, pnts: int) -> Tuple[Indi
     return Individual(child1), Individual(child2)
 
 def mutate(indiv: Individual, prob: float) -> Individual:
+    """
+    Mutates each event in the gene with a probability of prob
+    """
     if not 0 <= prob <= 1:
         raise ValueError("mutate prob must be a value between 0 and 1.")
     for gene in indiv.schedule:
         pick = rnd.uniform(0, 1)
         if prob > pick:
-            alele_last_index = len(sched_aleles[gene.eventId] - 1)
-            gene.pilotId = sched_aleles[gene.eventId][rnd.randint(0, alele_last_index)]
+            allele_last_index = len(indiv.sched_alleles[gene.eventId] - 1)
+            gene.pilotId = indiv.sched_alleles[gene.eventId][rnd.randint(0, allele_last_index)]
     return indiv

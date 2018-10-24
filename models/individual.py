@@ -1,5 +1,7 @@
 from typing import List
+import random as rnd
 from models.eventGene import EventGene
+from models.pilot import Pilot
 
 class Individual():
     """
@@ -9,11 +11,14 @@ class Individual():
         schedule - an array of events and pilots
         fitness - the penalty score of this individual
     """
-    def __init__(self, schedule: List[EventGene] = None) -> None:
-        if schedule:
-            self.schedule = schedule
+    def __init__(self, schedule: List[EventGene], sched_alleles: List[Pilot] = None) -> None:
+        if sched_alleles:
+            for gene in schedule:
+                allele_last_index = len(sched_alleles[gene.eventId] - 1)
+                gene.pilotId = sched_alleles[gene.eventId][rnd.randint(0, allele_last_index)]
         else:
-            self.schedule = []
+            self.schedule = schedule
+        self.sched_allele = sched_alleles
         self.fitness = 0
 
     @property
@@ -33,6 +38,14 @@ class Individual():
         if fitness < 0:
             fitness = 0
         self._fitness = fitness
+
+    @property
+    def sched_alleles(self):
+        return self._sched_alleles
+
+    @sched_alleles.setter
+    def sched_alleles(self, sched_alleles):
+        self._sched_alleles = sched_alleles
 
     def __lt__(self, other):
         return self.fitness < other.fitness
