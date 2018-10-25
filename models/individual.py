@@ -1,6 +1,6 @@
-from typing import List
+from typing import List, Dict
 import random as rnd
-from models.eventGene import EventGene
+from models.event_gene import EventGene
 from models.pilot import Pilot
 
 class Individual():
@@ -11,14 +11,14 @@ class Individual():
         schedule - an array of events and pilots
         fitness - the penalty score of this individual
     """
-    def __init__(self, schedule: List[EventGene], sched_alleles: List[Pilot] = None) -> None:
+    def __init__(self, schedule: List[EventGene],
+                 sched_alleles: Dict[str, List[Pilot]] = None) -> None:
         if sched_alleles:
             for gene in schedule:
-                allele_last_index = len(sched_alleles[gene.eventId] - 1)
-                gene.pilotId = sched_alleles[gene.eventId][rnd.randint(0, allele_last_index)]
+                self.assign_rand_pilot(gene)
         else:
             self.schedule = schedule
-        self.sched_allele = sched_alleles
+        self.sched_alleles = sched_alleles
         self.fitness = 0
 
     @property
@@ -44,8 +44,15 @@ class Individual():
         return self._sched_alleles
 
     @sched_alleles.setter
-    def sched_alleles(self, sched_alleles):
+    def sched_alleles(self, sched_alleles: Dict[str, List[Pilot]]):
         self._sched_alleles = sched_alleles
+
+    def assign_rand_pilot(self, gene: EventGene):
+        """
+        Assign random pilot to the passed gene from the event allele.
+        """
+        allele_last_index = len(self.sched_alleles[gene.event_id]) - 1
+        gene.pilot_id = self.sched_alleles[gene.event_id][rnd.randint(0, allele_last_index)].id
 
     def __lt__(self, other):
         return self.fitness < other.fitness

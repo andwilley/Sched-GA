@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 from bisect import insort
 from models.individual import Individual
 from models.pilot import Pilot
@@ -9,7 +9,7 @@ from ga.operators import roulette_selection, create_and_mutate_offspring
 class Population():
 
     def __init__(self, size: int, elite_percent: int, sched: List[EventGene],
-                 sched_alleles: List[Pilot]):
+                 sched_alleles: Dict[str, List[Pilot]]):
         """
         Creates a list of random individuals as the population
         """
@@ -17,7 +17,7 @@ class Population():
             raise ValueError("elite_percent must be between 0 and 100")
 
         self.size = size
-        self.population = [Individual(sched, sched_alleles) for i in range(self.size)] # list of random individuals
+        self.population = [Individual(sched, sched_alleles) for i in range(self.size)]
         self.elite_size = int(elite_percent * self.size)
         self.elites: List[Individual] = []
         self.sched_alleles = sched_alleles

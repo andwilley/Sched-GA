@@ -62,6 +62,5 @@ def mutate(indiv: Individual, prob: float) -> Individual:
     for gene in indiv.schedule:
         pick = rnd.uniform(0, 1)
         if prob > pick:
-            allele_last_index = len(indiv.sched_alleles[gene.eventId] - 1)
-            gene.pilotId = indiv.sched_alleles[gene.eventId][rnd.randint(0, allele_last_index)]
+            indiv.assign_rand_pilot(gene)
     return indiv
