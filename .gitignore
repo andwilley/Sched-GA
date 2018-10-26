@@ -1,3 +1,7 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
 *.py[co]
 *.DS_*
 # Packages
@@ -31,3 +35,6 @@ build
 #Others
 .mypy_cache/
 .vscode
+
+# Sphinx documentation
+docs/_build/

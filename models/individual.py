@@ -1,25 +1,23 @@
-from typing import List, Dict
+from typing import List
+from copy import deepcopy
 import random as rnd
 from models.event_gene import EventGene
-from models.pilot import Pilot
+from app.state.sched import sched_alleles
 
 class Individual():
     """
     Individual represents a single chromosome
 
     Attributes:
-        schedule - an array of events and pilots
-        fitness - the penalty score of this individual
+        schedule: an array of event and pilot ids
+        sched_alleles: a dict containing the feasible pilots for each event
+        fitness: the penalty score of this individual
     """
-    def __init__(self, schedule: List[EventGene],
-                 sched_alleles: Dict[str, List[Pilot]] = None) -> None:
-        if sched_alleles:
-            for gene in schedule:
-                self.assign_rand_pilot(gene)
-        else:
-            self.schedule = schedule
-        self.sched_alleles = sched_alleles
+    def __init__(self, schedule: List[EventGene]) -> None:
+        self.schedule = deepcopy(schedule)
         self.fitness = 0
+        for gene in self.schedule:
+            self.assign_rand_pilot(gene)
 
     @property
     def schedule(self) -> List[EventGene]:
@@ -39,20 +37,12 @@ class Individual():
             fitness = 0
         self._fitness = fitness
 
-    @property
-    def sched_alleles(self):
-        return self._sched_alleles
-
-    @sched_alleles.setter
-    def sched_alleles(self, sched_alleles: Dict[str, List[Pilot]]):
-        self._sched_alleles = sched_alleles
-
     def assign_rand_pilot(self, gene: EventGene):
         """
         Assign random pilot to the passed gene from the event allele.
         """
-        allele_last_index = len(self.sched_alleles[gene.event_id]) - 1
-        gene.pilot_id = self.sched_alleles[gene.event_id][rnd.randint(0, allele_last_index)].id
+        allele_last_index = len(sched_alleles[gene.event_id]) - 1
+        gene.pilot_id = sched_alleles[gene.event_id][rnd.randint(0, allele_last_index)]
 
     def __lt__(self, other):
         return self.fitness < other.fitness

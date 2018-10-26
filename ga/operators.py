@@ -35,11 +35,14 @@ def create_and_mutate_offspring(parents: List[Individual],
 def crossover(parent1: Individual, parent2: Individual, pnts: int) -> Tuple[Individual, Individual]:
     """
     Peform crossover on parent1 and parent2 to create 2 children.
-    Params:
+
+    Args:
         parent1: first parent
         parent2: second parent
         pnts: number of pnts to cross over at. set to length of parent for uniform.
-    Return: 2 children
+
+    Returns:
+        2 child Individuals as a tuple
     """
     xovers: List[int] = []
     for _ in range(pnts):
@@ -55,12 +58,20 @@ def crossover(parent1: Individual, parent2: Individual, pnts: int) -> Tuple[Indi
 
 def mutate(indiv: Individual, prob: float) -> Individual:
     """
-    Mutates each event in the gene with a probability of prob
+    Mutates each event in the gene with a probability of prob.
+    Actually mutates the passed Individual object
+
+    Args:
+        indiv: the individual to mutate
+        prob: the probability as a decimal with which to mutate
+
+    Returns:
+        The same individual with updated genes after mutation
     """
     if not 0 <= prob <= 1:
         raise ValueError("mutate prob must be a value between 0 and 1.")
     for gene in indiv.schedule:
         pick = rnd.uniform(0, 1)
-        if prob > pick:
+        if prob >= pick:
             indiv.assign_rand_pilot(gene)
     return indiv
