@@ -44,17 +44,19 @@ def crossover(parent1: Individual, parent2: Individual, pnts: int) -> Tuple[Indi
     Returns:
         2 child Individuals as a tuple
     """
+    if pnts >= len(parent1):
+        raise ValueError("cross over points must be smaller than the size of the array")
     xovers: List[int] = []
     for _ in range(pnts):
-        insort(xovers, rnd.uniform(0, len(parent1) - 1))
+        insort(xovers, rnd.randint(0, len(parent1) - 1))
     child1: List[EventGene] = parent1.schedule
     child2: List[EventGene] = parent2.schedule
-    for xover, i in enumerate(xovers):
+    for i, xover in enumerate(xovers):
         assign_to_child1 = parent1.schedule if i % 2 else parent2.schedule
         assign_to_child2 = parent2.schedule if i % 2 else parent1.schedule
         child1 = child1[:xover] + assign_to_child1[xover:]
         child2 = child2[:xover] + assign_to_child2[xover:]
-    return Individual(child1), Individual(child2)
+    return Individual(child1, fill=False), Individual(child2, fill=False)
 
 def mutate(indiv: Individual, prob: float) -> Individual:
     """

@@ -10,14 +10,14 @@ class Individual():
 
     Attributes:
         schedule: an array of event and pilot ids
-        sched_alleles: a dict containing the feasible pilots for each event
         fitness: the penalty score of this individual
     """
-    def __init__(self, schedule: List[EventGene]) -> None:
+    def __init__(self, schedule: List[EventGene], fill: bool = True) -> None:
         self.schedule = deepcopy(schedule)
         self.fitness = 0
-        for gene in self.schedule:
-            self.assign_rand_pilot(gene)
+        if fill:
+            for gene in self.schedule:
+                self.assign_rand_pilot(gene)
 
     @property
     def schedule(self) -> List[EventGene]:
@@ -66,4 +66,4 @@ class Individual():
         return len(self.schedule)
 
     def __repr__(self):
-        return "value {}, fitness {}".format(self.schedule, self.fitness)
+        return "schedule {}, fitness {}".format(self.schedule, self.fitness)
