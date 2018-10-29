@@ -6,11 +6,21 @@ from models.event_gene import EventGene
 
 # operates on population as a list of individuals
 
-def roulette_selection(population: List[Individual]) -> Individual:
+def roulette_selection(population: List[Individual], num_parents: int) -> List[Individual]:
     """
-    Select a parent by roulette (proportional) selection
+    Select specified num parents by roulette (proportional) selection
     """
     sum_fit = sum([indiv.fitness for indiv in population])
+
+    parents = []
+    for _ in range(num_parents):
+        parents.append(roulette_select_one(population, sum_fit))
+    return parents
+
+def roulette_select_one(population: List[Individual], sum_fit: float) -> Individual:
+    """
+    Select one parent via roulette
+    """
     pick = rnd.uniform(0, sum_fit)
     current = 0
     for individual in population:
@@ -29,7 +39,8 @@ def create_and_mutate_offspring(parents: List[Individual],
         j = i + 1 if i + 1 < len(parents) else 0
         child1, child2 = crossover(parents[i], parents[j], points)
         children.append(mutate(child1, mutate_prob))
-        children.append(mutate(child2, mutate_prob))
+        if i + 1 < len(parents):
+            children.append(mutate(child2, mutate_prob))
     return children
 
 def crossover(parent1: Individual, parent2: Individual, pnts: int) -> Tuple[Individual, Individual]:
