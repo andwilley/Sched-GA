@@ -11,8 +11,8 @@ class Pilot():
         return self._id
 
     @id.setter
-    def id(self, id: UUID):
-        self._id = id
+    def id(self, the_id: UUID):
+        self._id = the_id
 
     def __repr__(self) -> str:
         return "pilotId {}".format(self.id.urn)
