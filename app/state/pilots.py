@@ -1,4 +1,4 @@
-from models.pilot import Pilot
+from app.models.pilot import Pilot
 
 pilot1 = Pilot()
 pilot2 = Pilot()

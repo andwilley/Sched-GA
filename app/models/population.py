@@ -1,15 +1,13 @@
-from typing import List, Dict
+from typing import List
 from bisect import insort
-from models.individual import Individual
-from models.pilot import Pilot
-from models.event_gene import EventGene
-from ga.fitness import calc_fitness
-from ga.operators import roulette_selection, create_and_mutate_offspring
+from app.models.individual import Individual
+from app.models.event_gene import EventGene
+from app.ga.fitness import calc_fitness
+from app.ga.operators import roulette_selection, create_and_mutate_offspring
 
 class Population():
 
-    def __init__(self, size: int, elite_percent: int, sched: List[EventGene],
-                 sched_alleles: Dict[str, List[Pilot]]):
+    def __init__(self, size: int, elite_percent: int, sched: List[EventGene]):
         """
         Creates a list of random individuals as the population
         """
@@ -17,10 +15,9 @@ class Population():
             raise ValueError("elite_percent must be between 0 and 100")
 
         self.size = size
-        self.population = [Individual(sched, sched_alleles) for i in range(self.size)]
+        self.population = [Individual(sched) for i in range(self.size)]
         self.elite_size = int(elite_percent * self.size)
         self.elites: List[Individual] = []
-        self.sched_alleles = sched_alleles
         self.max_fitness = 0
 
     @property
@@ -59,14 +56,6 @@ class Population():
     def elite_size(self, elite_size):
         self._elite_size = elite_size
 
-    @property
-    def sched_alleles(self):
-        return self._sched_alleles
-
-    @sched_alleles.setter
-    def sched_alleles(self, sched_alleles):
-        self._sched_alleles = sched_alleles
-
     def merge_and_set_populations(self, pop1: List[Individual], pop2: List[Individual]):
         if len(pop1) + len(pop2) != self.size:
             raise ValueError("Invalid population size.")
@@ -97,22 +86,15 @@ class Population():
         for indiv in self.population:
             indiv.fitness = self.max_fitness - indiv.fitness
 
-    def make_next_generation(self):
+    def make_next_generation(self) -> None:
         """
         Replaces the population with the next generation using GA operators
         """
-        next_pop: List[Individual] = []
-        parents: List[Individual] = []
-        children: List[Individual] = []
-
-        # push the elites forward
-        for elite in self.elites:
-            next_pop.append(elite)
-
         # select parents
-        for _ in range(len(next_pop), self.size):
-            parents.append(roulette_selection(self.population))
+        parents = roulette_selection(self.population, self.size - self.elite_size)
 
+        # make children
         children = create_and_mutate_offspring(parents, points=2, mutate_prob=0.1)
-        # calc offspring fitness
-        # merge elites and offspring into new population
+
+        # add elites
+        self.population = self.elites + children

@@ -1,8 +1,8 @@
 import unittest
 import random as rnd
-from ga.operators import roulette_selection, create_and_mutate_offspring, crossover, mutate
-from models.individual import Individual
-from app.state.sched import schedule
+from app.ga.operators import roulette_selection, create_and_mutate_offspring, crossover, mutate
+from app.models.individual import Individual
+from app.test.test_state import schedule
 
 class OperatorsCase(unittest.TestCase):
 

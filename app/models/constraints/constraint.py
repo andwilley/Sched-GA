@@ -1,5 +1,5 @@
 import abc
-from models.event_gene import EventGene
+from app.models.event_gene import EventGene
 
 class Constraint(abc.ABC):
     """

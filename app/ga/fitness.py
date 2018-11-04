@@ -1,5 +1,5 @@
-from models.individual import Individual
-from models.constraints.constraint import Constraint
+from app.models.individual import Individual
+from app.models.constraints.constraint import Constraint
 
 def calc_fitness(indiv: Individual, *constraints: Constraint) -> int:
     for event in indiv.schedule:

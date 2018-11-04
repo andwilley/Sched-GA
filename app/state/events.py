@@ -1,5 +1,7 @@
+import uuid
+from typing import Dict
 from datetime import datetime
-from models.event import Event
+from app.models.event import Event
 
 event1 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), "flight")
 event2 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), "flight")
@@ -12,7 +14,7 @@ event8 = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), "flight
 event9 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight")
 event10 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight")
 
-events = {
+events: Dict[uuid.UUID, Event] = {
     event1.id: event1,
     event2.id: event2,
     event3.id: event3,

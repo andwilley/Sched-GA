@@ -1,8 +1,8 @@
 import random as rnd
 from typing import List, Tuple
 from bisect import insort
-from models.individual import Individual
-from models.event_gene import EventGene
+from app.models.individual import Individual
+from app.models.event_gene import EventGene
 
 # operates on population as a list of individuals
 

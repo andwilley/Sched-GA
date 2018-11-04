@@ -1,7 +1,7 @@
 from typing import List
 from copy import deepcopy
 import random as rnd
-from models.event_gene import EventGene
+from app.models.event_gene import EventGene
 from app.state.sched import sched_alleles
 
 class Individual():
@@ -37,7 +37,7 @@ class Individual():
             fitness = 0
         self._fitness = fitness
 
-    def assign_rand_pilot(self, gene: EventGene):
+    def assign_rand_pilot(self, gene: EventGene) -> None:
         """
         Assign random pilot to the passed gene from the event allele.
         """

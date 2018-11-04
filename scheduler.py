@@ -1,10 +1,10 @@
 import random as rnd
 import numpy as np
 
-from models.individual import Individual
-from models.eventGene import EventGene
-from models.pilot import Pilot
-from models.event import Event
+from app.models.individual import Individual
+from app.models.event_gene import EventGene
+from app.models.pilot import Pilot
+from app.models.event import Event
 
 # Runs the EA that fills pilots into events in a schedule.
 

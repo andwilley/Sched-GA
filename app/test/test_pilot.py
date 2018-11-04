@@ -1,6 +1,6 @@
 import unittest
 from uuid import UUID
-from models.pilot import Pilot
+from app.models.pilot import Pilot
 
 class PilotsCase(unittest.TestCase):
 

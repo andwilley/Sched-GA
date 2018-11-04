@@ -1,5 +1,5 @@
 import unittest
-from models.event_gene import EventGene
+from app.models.event_gene import EventGene
 
 class EventGeneCase(unittest.TestCase):
 

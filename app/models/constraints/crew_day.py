@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 from typing import Dict
 import uuid
-from models.constraints.constraint import Constraint
-from models.event_gene import EventGene
-from app.state.events import events
+from app.models.constraints.constraint import Constraint
+from app.models.event_gene import EventGene
+# from app.state.events import events
+from app.test.test_state import events
 from app.constants.opnav import DAY_CREW_DAY, NIGHT_CREW_DAY
 from app.constants.environment import SUNSET
 
@@ -11,9 +12,8 @@ class CrewDay(Constraint):
     """
     CrewDay constraint. Limits pilots to DAY_CREW_DAY or NIGHT_CREW_DAY hours per day.
     Applies a penalty if an overage occurs.
-
-    
     """
+
     def __init__(self):
         self._fitness = 0.0
         self._crew_hours: Dict[uuid.UUID, Dict[str, datetime]] = {}
@@ -23,7 +23,7 @@ class CrewDay(Constraint):
         Called for each event in the individual.
         Track the earliest start and latest end, as well as the penalty (fitness).
         For each event, update the fitness with the overall change to the overage
-        for that pilot's schedule.
+        for that pilot's schedule, if any.
         """
         # for the pilot, save the earliest and latest times.
         event_start = events[gene.event_id].start
@@ -62,6 +62,7 @@ class CrewDay(Constraint):
     def minutes_over_crew_day(start: datetime, end: datetime) -> float:
         diff: timedelta = end - start
         minutes_diff: float = diff.total_seconds() / 60
+
         # assumes only flight events end after sunset
         crew_day = DAY_CREW_DAY if end < SUNSET else NIGHT_CREW_DAY
         return minutes_diff if minutes_diff - (crew_day * 60) > 0 else 0.0
