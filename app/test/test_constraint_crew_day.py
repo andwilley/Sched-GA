@@ -1,5 +1,5 @@
 import unittest
-from app.test.test_state import indiv
+from app.test.test_state import indiv_crewday
 from app.models.constraints.crew_day import CrewDay
 
 class ConstraintCrewDayCase(unittest.TestCase):
@@ -12,7 +12,8 @@ class ConstraintCrewDayCase(unittest.TestCase):
 
         crew_day_constraint = CrewDay()
 
-        for gene in indiv:
+        for gene in indiv_crewday:
             crew_day_constraint.each_event(gene)
 
-        self.assertEqual(crew_day_constraint.get_final_fitness, 60*3, "Fitness should be 3 hours.")
+        self.assertEqual(crew_day_constraint.get_final_fitness(), 60 * 3,
+                         "Fitness should be 3 hours.")

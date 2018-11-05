@@ -2,7 +2,7 @@ from typing import List
 from bisect import insort
 from app.models.individual import Individual
 from app.models.event_gene import EventGene
-from app.ga.fitness import calc_fitness
+from app.ga.fitness import calc_fitness, get_constraints
 from app.ga.operators import roulette_selection, create_and_mutate_offspring
 
 class Population():
@@ -67,7 +67,7 @@ class Population():
         """
         self.elites = []
         for indiv in self.population:
-            indiv.fitness = calc_fitness(indiv)
+            indiv.fitness = calc_fitness(indiv, get_constraints())
             # fill up elites
             if len(self.elites) < self.elite_size:
                 insort(self.elites, indiv)
@@ -96,5 +96,5 @@ class Population():
         # make children
         children = create_and_mutate_offspring(parents, points=2, mutate_prob=0.1)
 
-        # add elites
+        # add elites and set population
         self.population = self.elites + children

@@ -3,8 +3,8 @@ from typing import Dict
 import uuid
 from app.models.constraints.constraint import Constraint
 from app.models.event_gene import EventGene
-# from app.state.events import events
-from app.test.test_state import events
+from app.state.events import events # comment for tests
+# from app.test.test_state import events # use for tests
 from app.constants.opnav import DAY_CREW_DAY, NIGHT_CREW_DAY
 from app.constants.environment import SUNSET
 
@@ -61,8 +61,9 @@ class CrewDay(Constraint):
     @staticmethod
     def minutes_over_crew_day(start: datetime, end: datetime) -> float:
         diff: timedelta = end - start
-        minutes_diff: float = diff.total_seconds() / 60
 
         # assumes only flight events end after sunset
         crew_day = DAY_CREW_DAY if end < SUNSET else NIGHT_CREW_DAY
-        return minutes_diff if minutes_diff - (crew_day * 60) > 0 else 0.0
+
+        minutes_diff: float = (diff.total_seconds() / 60) - (crew_day * 60)
+        return minutes_diff if minutes_diff > 0 else 0.0

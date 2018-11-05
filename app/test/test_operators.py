@@ -22,7 +22,7 @@ class OperatorsCase(unittest.TestCase):
         """
         parent1 = Individual(schedule)
         parent2 = Individual(schedule)
-        xovers = 2
+        xovers = 1
 
         child1, child2 = crossover(parent1, parent2, xovers)
 

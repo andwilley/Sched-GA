@@ -1,46 +1,18 @@
-import random as rnd
-import numpy as np
-
-from app.models.individual import Individual
-from app.models.event_gene import EventGene
-from app.models.pilot import Pilot
-from app.models.event import Event
+from app.models.population import Population
+from app.state.sched import schedule
+from app.ga.parameters import MAX_GEN
 
 # Runs the EA that fills pilots into events in a schedule.
 
-MAX_GEN = 1000
-POP_SIZE = 300
-
-def createPopulation(size):
-    population = [Individual(rnd.randrange(100)) for i in range(size)]
-    return population
-
-def selectParents(population):
-    sortedPop = sorted(population, key=lambda indiv: indiv.fitness)
-    return sortedPop[0:POP_SIZE // 2]
-
-def makeChildren(parents):
-    return [Individual(mutate(parent)) for parent in parents]
-
-def mutate(parent):
-    return parent.value + np.random.normal(0, .1)
-
-
-
 # main program
-
-population = createPopulation(POP_SIZE)
-setPopFitness(population)
+# initialize population
+# calculate the fitness
 
 for gen in range(MAX_GEN):
     # select parents
-    parents = selectParents(population)
     # generate offspring
-    children = makeChildren(parents)
     # calc fitness
-    setPopFitness(children)
-    # combine population
-    population = parents + children
+    # save new population
+    pass
 
-sortedPop = sorted(population, key=lambda indiv: indiv.fitness)
-print(sortedPop[0].value)
+# display results

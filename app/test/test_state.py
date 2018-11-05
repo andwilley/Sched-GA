@@ -6,7 +6,7 @@ from app.models.pilot import Pilot
 from app.models.event_gene import EventGene
 
 """
-Crew Day test state
+Crew Day test state (x)
 """
 
 # violates day crew day by 1 hour
@@ -21,13 +21,14 @@ event4 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight
 event5 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), "flight")
 event6 = Event(datetime(2019, 1, 1, 12, 0), datetime(2019, 1, 1, 13, 0), "flight")
 
+# total violation 180 minutes ( 3 hours )
+
 events: Dict[uuid.UUID, Event] = {
     event1.id: event1,
     event2.id: event2,
     event3.id: event3,
     event4.id: event4,
     event5.id: event5,
-    event6.id: event6,
 }
 
 # 3 pilots
@@ -51,11 +52,68 @@ gene4.pilot_id = pilot2.id
 gene5 = EventGene(event5.id)
 gene5.pilot_id = pilot3.id
 
-gene6 = EventGene(event6.id)
-gene6.pilot_id = pilot3.id
+# make individual
+indiv_crewday = [gene1, gene2, gene3, gene4, gene5]
+
+"""
+Event Overlap test state (1x)
+"""
+
+#                 |-----------b/l-----------|
+#          |---a---|
+#                                         |-----b-----|
+#                       |-----c----|
+#                                                          |--d--|
+#                                                                |--e---|
+# total of 3 overlaps
+
+# baseline event
+event11 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), "flight")
+# a - overlap start
+event12 = Event(datetime(2019, 1, 1, 9, 30), datetime(2019, 1, 1, 10, 1), "flight")
+# b - overlap end
+event13 = Event(datetime(2019, 1, 1, 10, 59), datetime(2019, 1, 1, 11, 30), "flight")
+# c - total overlap
+event14 = Event(datetime(2019, 1, 1, 10, 20), datetime(2019, 1, 1, 10, 40), "flight")
+# d - does not conflict
+event15 = Event(datetime(2019, 1, 1, 13, 0), datetime(2019, 1, 1, 14, 0), "flight")
+# e - does not conflict (end and start same)
+event16 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight")
+
+events_overlap: Dict[uuid.UUID, Event] = {
+    event11.id: event11,
+    event12.id: event12,
+    event13.id: event13,
+    event14.id: event14,
+    event15.id: event15,
+    event16.id: event16,
+}
+
+# 3 pilots
+pilot11 = Pilot()
+
+# make event genes
+gene11 = EventGene(event11.id)
+gene11.pilot_id = pilot11.id
+
+gene12 = EventGene(event12.id)
+gene12.pilot_id = pilot11.id
+
+gene13 = EventGene(event13.id)
+gene13.pilot_id = pilot11.id
+
+gene14 = EventGene(event14.id)
+gene14.pilot_id = pilot11.id
+
+gene15 = EventGene(event15.id)
+gene15.pilot_id = pilot11.id
+
+gene16 = EventGene(event16.id)
+gene16.pilot_id = pilot11.id
 
 # make individual
-indiv = [gene1, gene2, gene3, gene4, gene5, gene6]
+indiv_overlap = [gene11, gene12, gene13, gene14, gene15, gene16]
+
 
 """
 operators test state

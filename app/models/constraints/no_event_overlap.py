@@ -2,7 +2,8 @@ from typing import Dict, List
 import uuid
 from app.models.constraints.constraint import Constraint
 from app.models.event_gene import EventGene
-from app.state.events import events
+from app.state.events import events # comment for tests
+# from app.test.test_state import events_overlap as events # use for tests
 
 class NoEventOverlap(Constraint):
     """
