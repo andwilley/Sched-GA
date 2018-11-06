@@ -142,3 +142,66 @@ sched_alleles = {
     uuid2: [uuid14, uuid15, uuid16],
     uuid3: [uuid17, uuid18, uuid19],
 }
+
+"""
+Population Test State (2x)
+"""
+
+event20 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 8, 0), "flight")
+event21 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 8, 0), "flight")
+event22 = Event(datetime(2019, 1, 1, 9, 0), datetime(2019, 1, 1, 10, 0), "flight")
+event23 = Event(datetime(2019, 1, 1, 9, 0), datetime(2019, 1, 1, 10, 0), "flight")
+event24 = Event(datetime(2019, 1, 1, 13, 0), datetime(2019, 1, 1, 14, 0), "flight")
+event25 = Event(datetime(2019, 1, 1, 13, 0), datetime(2019, 1, 1, 14, 0), "flight")
+event26 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight")
+event27 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight")
+event28 = Event(datetime(2019, 1, 1, 22, 0), datetime(2019, 1, 1, 23, 0), "flight")
+event29 = Event(datetime(2019, 1, 1, 22, 0), datetime(2019, 1, 1, 23, 0), "flight")
+
+pilot20 = Pilot()
+pilot21 = Pilot()
+pilot22 = Pilot()
+pilot23 = Pilot()
+pilot24 = Pilot()
+pilot25 = Pilot()
+pilot26 = Pilot()
+pilot27 = Pilot()
+
+pop_events = {
+    event20.id: event20,
+    event21.id: event21,
+    event22.id: event22,
+    event23.id: event23,
+    event24.id: event24,
+    event25.id: event25,
+    event26.id: event26,
+    event27.id: event27,
+    event28.id: event28,
+    event29.id: event29,
+}
+
+pop_sched = [
+    EventGene(event20.id),
+    EventGene(event21.id),
+    EventGene(event22.id),
+    EventGene(event23.id),
+    EventGene(event24.id),
+    EventGene(event25.id),
+    EventGene(event26.id),
+    EventGene(event27.id),
+    EventGene(event28.id),
+    EventGene(event29.id),
+]
+
+pop_sched_alleles = {
+    event20.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event21.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event22.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event23.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event24.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event25.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event26.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event27.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event28.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event29.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+}

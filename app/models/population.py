@@ -4,29 +4,30 @@ from app.models.individual import Individual
 from app.models.event_gene import EventGene
 from app.ga.fitness import calc_fitness, get_constraints
 from app.ga.operators import roulette_selection, create_and_mutate_offspring
+from app.ga.parameters import X_OVER_PTS, MUT_PROB
 
 class Population():
 
-    def __init__(self, size: int, elite_percent: int, sched: List[EventGene]):
+    def __init__(self, size: int, elite_ratio: float, sched: List[EventGene]):
         """
         Creates a list of random individuals as the population
         """
-        if not 0 <= elite_percent <= 100:
-            raise ValueError("elite_percent must be between 0 and 100")
+        if not 0 <= elite_ratio <= 1:
+            raise ValueError("elite_ratio must be between 0 and 100")
 
         self.size = size
         self.population = [Individual(sched) for i in range(self.size)]
-        self.elite_size = int(elite_percent * self.size)
+        self.elite_size = int(elite_ratio * self.size)
         self.elites: List[Individual] = []
         self.max_fitness = 0
 
     @property
-    def size(self):
+    def size(self) -> int:
         return self._size
 
     @size.setter
-    def size(self, size):
-        if self.size:
+    def size(self, size: int) -> None:
+        if hasattr(self, '_size'):
             return
         self._size = size
 
@@ -35,7 +36,7 @@ class Population():
         return self._population
 
     @population.setter
-    def population(self, population: List[Individual]):
+    def population(self, population: List[Individual]) -> None:
         if len(population) != self.size:
             raise ValueError("Invalid population size.")
         self._population: List[Individual] = population
@@ -45,7 +46,7 @@ class Population():
         return self._elites
 
     @elites.setter
-    def elites(self, elites: List[Individual]):
+    def elites(self, elites: List[Individual]) -> None:
         self._elites = elites
 
     @property
@@ -53,7 +54,7 @@ class Population():
         return self._elite_size
 
     @elite_size.setter
-    def elite_size(self, elite_size):
+    def elite_size(self, elite_size: int) -> None:
         self._elite_size = elite_size
 
     def merge_and_set_populations(self, pop1: List[Individual], pop2: List[Individual]):
@@ -61,7 +62,7 @@ class Population():
             raise ValueError("Invalid population size.")
         self.population = pop1 + pop2
 
-    def set_fitness(self):
+    def set_fitness(self) -> None:
         """
         Calculates and sets the fitness of each individual in the population
         """
@@ -82,7 +83,7 @@ class Population():
         # run through one more time to invert the fitness
         self._invert_fitness()
 
-    def _invert_fitness(self):
+    def _invert_fitness(self) -> None:
         for indiv in self.population:
             indiv.fitness = self.max_fitness - indiv.fitness
 
@@ -94,7 +95,7 @@ class Population():
         parents = roulette_selection(self.population, self.size - self.elite_size)
 
         # make children
-        children = create_and_mutate_offspring(parents, points=2, mutate_prob=0.1)
+        children = create_and_mutate_offspring(parents, points=X_OVER_PTS, mutate_prob=MUT_PROB)
 
         # add elites and set population
         self.population = self.elites + children

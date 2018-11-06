@@ -2,7 +2,8 @@ from typing import List
 from copy import deepcopy
 import random as rnd
 from app.models.event_gene import EventGene
-from app.state.sched import sched_alleles
+# from app.state.sched import sched_alleles
+from app.test.test_state import pop_sched_alleles as sched_alleles
 
 class Individual():
     """
