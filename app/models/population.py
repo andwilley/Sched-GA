@@ -68,7 +68,7 @@ class Population():
         """
         self.elites = []
         for indiv in self.population:
-            indiv.fitness = calc_fitness(indiv, get_constraints())
+            indiv.fitness = calc_fitness(indiv, *get_constraints())
             # fill up elites
             if len(self.elites) < self.elite_size:
                 insort(self.elites, indiv)
@@ -99,3 +99,6 @@ class Population():
 
         # add elites and set population
         self.population = self.elites + children
+
+    def __repr__(self):
+        return "(Population: )"

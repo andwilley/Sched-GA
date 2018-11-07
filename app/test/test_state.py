@@ -158,14 +158,25 @@ event27 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "fligh
 event28 = Event(datetime(2019, 1, 1, 22, 0), datetime(2019, 1, 1, 23, 0), "flight")
 event29 = Event(datetime(2019, 1, 1, 22, 0), datetime(2019, 1, 1, 23, 0), "flight")
 
-pilot20 = Pilot()
-pilot21 = Pilot()
-pilot22 = Pilot()
-pilot23 = Pilot()
-pilot24 = Pilot()
-pilot25 = Pilot()
-pilot26 = Pilot()
-pilot27 = Pilot()
+pilot20 = Pilot("Steamboat")
+pilot21 = Pilot("Dump")
+pilot22 = Pilot("Tummy")
+pilot23 = Pilot("Virgil")
+pilot24 = Pilot("Topper")
+pilot25 = Pilot("Spacecamp")
+pilot26 = Pilot("Jambles")
+pilot27 = Pilot("Beef")
+
+pop_pilots = {
+    pilot20.id: pilot20,
+    pilot21.id: pilot21,
+    pilot22.id: pilot22,
+    pilot23.id: pilot23,
+    pilot24.id: pilot24,
+    pilot25.id: pilot25,
+    pilot26.id: pilot26,
+    pilot27.id: pilot27,
+}
 
 pop_events = {
     event20.id: event20,
@@ -194,14 +205,24 @@ pop_sched = [
 ]
 
 pop_sched_alleles = {
-    event20.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
-    event21.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
-    event22.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
-    event23.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
-    event24.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
-    event25.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
-    event26.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
-    event27.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
-    event28.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
-    event29.id: [pilot20.id, pilot21.id, pilot22.id, pilot23, pilot24, pilot25, pilot26, pilot27],
+    event20.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
+    event21.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
+    event22.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
+    event23.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
+    event24.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
+    event25.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
+    event26.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
+    event27.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
+    event28.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
+    event29.id: [pilot20.id, pilot21.id, pilot22.id, pilot23.id, pilot24.id, pilot25.id,
+                 pilot26.id, pilot27.id],
 }

@@ -14,3 +14,7 @@ class PopulationCase(unittest.TestCase):
 
     def test_set_fitness(self):
         pop = Population(10, .1, schedule)
+        pop.set_fitness()
+        for indiv in pop.population:
+            print(indiv)
+        print(pop.elites)

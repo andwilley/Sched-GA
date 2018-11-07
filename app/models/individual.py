@@ -67,4 +67,8 @@ class Individual():
         return len(self.schedule)
 
     def __repr__(self):
-        return "schedule {}, fitness {}".format(self.schedule, self.fitness)
+        schedule = []
+        for gene in self.schedule:
+            schedule.append(gene.__repr__())
+        schedule = "\n".join(schedule)
+        return "(Individual: schedule \n{}, fitness {})".format(schedule, self.fitness)

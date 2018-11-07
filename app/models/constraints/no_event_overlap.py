@@ -1,9 +1,10 @@
 from typing import Dict, List
 import uuid
+from app.ga.parameters import OVERLAP_WEIGHT
 from app.models.constraints.constraint import Constraint
 from app.models.event_gene import EventGene
-from app.state.events import events # comment for tests
-# from app.test.test_state import events_overlap as events # use for tests
+# from app.state.events import events # comment for tests
+from app.test.test_state import pop_events as events # use for tests
 
 class NoEventOverlap(Constraint):
     """
@@ -36,4 +37,4 @@ class NoEventOverlap(Constraint):
         """
         Return the fitness calculated with each_event().
         """
-        return self._fitness
+        return self._fitness * OVERLAP_WEIGHT
