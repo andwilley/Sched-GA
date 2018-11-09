@@ -4,7 +4,7 @@ class EventGene():
 
     def __init__(self, event_id: uuid.UUID) -> None:
         self.event_id = event_id
-        self.pilot_id = uuid.uuid4()
+        self.pilot_id = None
 
     @property
     def event_id(self) -> uuid.UUID:

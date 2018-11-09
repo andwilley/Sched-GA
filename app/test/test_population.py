@@ -5,7 +5,7 @@ from app.test.test_state import pop_sched, pop_pilots, pop_events, pop_sched_all
 
 class PopulationCase(unittest.TestCase):
     POP_SIZE = 10
-    ELITE_RATIO = .1
+    ELITE_RATIO = .1 # tests written for 1 elite
 
     def test_initialize(self):
         state = State(pop_pilots, pop_events, pop_sched, pop_sched_alleles)
@@ -20,9 +20,13 @@ class PopulationCase(unittest.TestCase):
         state = State(pop_pilots, pop_events, pop_sched, pop_sched_alleles)
         pop = Population(self.POP_SIZE, self.ELITE_RATIO, state=state)
         pop.set_fitness()
+        self.assertEqual(len(pop.elites), pop.elite_size, "Elites should be correct size")
         print("\n\nTest fitness")
+        at_least_one_is_not_zero = False
         for indiv in pop.population:
+            at_least_one_is_not_zero = True if indiv.fitness > 0 else at_least_one_is_not_zero
             print(indiv)
+        self.assertTrue(at_least_one_is_not_zero, "fitness should be set for the population")
         print(pop.elites)
 
     def test_make_next_gen(self):

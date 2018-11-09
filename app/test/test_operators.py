@@ -82,7 +82,8 @@ class OperatorsCase(unittest.TestCase):
 
         pop_avg_fit = sum([indiv.fitness for indiv in population])
         sel_avg_fit = sum([indiv.fitness for indiv in selection])
-        self.assertGreater(sel_avg_fit, pop_avg_fit, "new selection fitness should be higher")
+        self.assertGreater(sel_avg_fit, pop_avg_fit, "new selection fitness SHOULD be higher. \
+            this may not be the case on EVERY run, just most. try the test again.")
 
     def test_roulette_one(self):
         """

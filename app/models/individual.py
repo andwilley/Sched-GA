@@ -46,6 +46,9 @@ class Individual():
         gene.pilot_id = self._state.alleles[gene.event_id][rnd.randint(0, allele_last_index)]
 
     def spawn(self, new_sched: List[EventGene]):
+        """
+        Create a new individual from a modified schedule (xover or mutation done externally)
+        """
         indiv = Individual(self._state, fill=False)
         indiv.schedule = new_sched
         return indiv

@@ -39,11 +39,6 @@ class NoEventOverlap(Constraint):
         else:
             self._pilot_events[gene.pilot_id] = [gene.event_id]
 
-            # max(self._state.events[event_id].start,
-            #            self._state.events[gene.event_id].start)\
-            #        < min(self._state.events[event_id].end,
-            #              self._state.events[gene.event_id].end)
-
     def get_final_fitness(self) -> int:
         """
         Return the fitness calculated with each_event().
