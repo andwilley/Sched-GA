@@ -36,6 +36,12 @@ pilot1 = Pilot()
 pilot2 = Pilot()
 pilot3 = Pilot()
 
+cd_pilots = {
+    pilot1.id: pilot1,
+    pilot2.id: pilot2,
+    pilot3.id: pilot3,
+}
+
 # make event genes
 gene1 = EventGene(event1.id)
 gene1.pilot_id = pilot1.id
