@@ -12,7 +12,7 @@ class OperatorsCase(unittest.TestCase):
         Test the mutation operator.
         Test is the console output. This is lazy.
         """
-        state = State(op_pilots, op_events, schedule, sched_alleles)
+        state = State(op_pilots, op_events)
         indiv1 = Individual(state)
         print(indiv1)
         mut1 = mutate(indiv1, 1.0)
@@ -22,7 +22,7 @@ class OperatorsCase(unittest.TestCase):
         """
         Test the crossover operator.
         """
-        state = State(op_pilots, op_events, schedule, sched_alleles)
+        state = State(op_pilots, op_events)
         parent1 = Individual(state)
         parent2 = Individual(state)
         xovers = 1
@@ -48,7 +48,7 @@ class OperatorsCase(unittest.TestCase):
         """
         Test the create offspring operator for odd and even num parents
         """
-        state = State(op_pilots, op_events, schedule, sched_alleles)
+        state = State(op_pilots, op_events)
         num_parents = 5
 
         parents = []
@@ -67,7 +67,7 @@ class OperatorsCase(unittest.TestCase):
         """
         Test roulette selection. This should test for proportional probability.
         """
-        state = State(op_pilots, op_events, schedule, sched_alleles)
+        state = State(op_pilots, op_events)
         num_indivs = 10
         num_parents = 9
 
@@ -89,7 +89,7 @@ class OperatorsCase(unittest.TestCase):
         """
         Test roulette selection. This should test for proportional probability.
         """
-        state = State(op_pilots, op_events, schedule, sched_alleles)
+        state = State(op_pilots, op_events)
         num_parents = 1
         new_indiv = Individual(state)
 

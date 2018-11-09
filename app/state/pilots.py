@@ -1,13 +1,13 @@
 from app.models.pilot import Pilot
 
-pilot1 = Pilot()
-pilot2 = Pilot()
-pilot3 = Pilot()
-pilot4 = Pilot()
-pilot5 = Pilot()
-pilot6 = Pilot()
-pilot7 = Pilot()
-pilot8 = Pilot()
+pilot1 = Pilot("Steam")
+pilot2 = Pilot("Virgil")
+pilot3 = Pilot("Dump")
+pilot4 = Pilot("Beef")
+pilot5 = Pilot("Space")
+pilot6 = Pilot("Jambles")
+pilot7 = Pilot("Cox")
+pilot8 = Pilot("Tummy")
 
 pilots = {
     pilot1.id: pilot1,

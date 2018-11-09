@@ -4,11 +4,10 @@ from app.models.individual import Individual
 from app.ga.fitness import calc_fitness, get_constraints
 from app.ga.operators import roulette_selection, create_and_mutate_offspring
 from app.models.state import State
-from app.ga.parameters import X_OVER_PTS, MUT_PROB
 
 class Population():
 
-    def __init__(self, size: int, elite_ratio: float, state: State):
+    def __init__(self, size: int, elite_ratio: float, x_ovr_pts: int, mut_prb: float, state: State):
         """
         Creates a list of random individuals as the population
         """
@@ -21,6 +20,8 @@ class Population():
         self.elites: List[Individual] = []
         self.max_fitness = 0
         self._state = state
+        self._x_ovr_pts = x_ovr_pts
+        self._mut_prb = mut_prb
 
     @property
     def size(self) -> int:
@@ -97,7 +98,8 @@ class Population():
         parents = roulette_selection(self.population, self.size - self.elite_size)
 
         # make children
-        children = create_and_mutate_offspring(parents, points=X_OVER_PTS, mutate_prob=MUT_PROB)
+        children = create_and_mutate_offspring(parents, points=self._x_ovr_pts,
+                                               mutate_prob=self._mut_prb)
 
         # add elites and set population
         self.population = self.elites + children

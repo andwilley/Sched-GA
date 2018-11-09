@@ -7,7 +7,7 @@ from app.test.test_state import schedule, sched_alleles, op_events, op_pilots
 class IndividualCase(unittest.TestCase):
 
     def test_init_and_setters(self):
-        state = State(op_pilots, op_events, schedule, sched_alleles)
+        state = State(op_pilots, op_events)
         indiv1 = Individual(state)
         indiv2 = Individual(state)
         indiv3 = Individual(state)

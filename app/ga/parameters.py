@@ -2,12 +2,12 @@
 The GA parameters
 """
 
-# 
-MAX_GEN = 1000
-POP_SIZE = 500
+# General population params
+MAX_GEN = 20
+POP_SIZE = 100
 
 # Operator params
-ELITE_RATIO = 0.1
+ELITE_RATIO = 0.0
 X_OVER_PTS = 1
 MUT_PROB = 0.1
 

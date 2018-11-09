@@ -6,10 +6,13 @@ from app.test.test_state import pop_sched, pop_pilots, pop_events, pop_sched_all
 class PopulationCase(unittest.TestCase):
     POP_SIZE = 10
     ELITE_RATIO = .1 # tests written for 1 elite
+    X_OVER_PNTS = 1
+    MUT_PROB = 0.1
 
     def test_initialize(self):
-        state = State(pop_pilots, pop_events, pop_sched, pop_sched_alleles)
-        pop = Population(self.POP_SIZE, self.ELITE_RATIO, state=state)
+        state = State(pop_pilots, pop_events)
+        pop = Population(self.POP_SIZE, self.ELITE_RATIO, self.X_OVER_PNTS, self.MUT_PROB,
+                         state=state)
         self.assertEqual(pop.max_fitness, 0, "Max fitness should init to 0")
         self.assertEqual(pop.elite_size, 1, "Elite size should be 1")
 
@@ -17,8 +20,9 @@ class PopulationCase(unittest.TestCase):
         self.assertEqual(pop.size, self.POP_SIZE, "Size should not change")
 
     def test_set_fitness(self):
-        state = State(pop_pilots, pop_events, pop_sched, pop_sched_alleles)
-        pop = Population(self.POP_SIZE, self.ELITE_RATIO, state=state)
+        state = State(pop_pilots, pop_events)
+        pop = Population(self.POP_SIZE, self.ELITE_RATIO, self.X_OVER_PNTS, self.MUT_PROB,
+                         state=state)
         pop.set_fitness()
         self.assertEqual(len(pop.elites), pop.elite_size, "Elites should be correct size")
         print("\n\nTest fitness")
@@ -30,8 +34,9 @@ class PopulationCase(unittest.TestCase):
         print(pop.elites)
 
     def test_make_next_gen(self):
-        state = State(pop_pilots, pop_events, pop_sched, pop_sched_alleles)
-        pop = Population(self.POP_SIZE, self.ELITE_RATIO, state=state)
+        state = State(pop_pilots, pop_events)
+        pop = Population(self.POP_SIZE, self.ELITE_RATIO, self.X_OVER_PNTS, self.MUT_PROB,
+                         state=state)
         pop.set_fitness()
         elite = pop.elites[0]
         print("\n\nFirst pop")

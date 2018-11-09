@@ -1,17 +1,15 @@
 import uuid
-from typing import Dict, List
+from typing import Dict, List, Tuple
 from app.models.pilot import Pilot
 from app.models.event import Event
 from app.models.event_gene import EventGene
 
 class State():
 
-    def __init__(self, pilots: Dict[uuid.UUID, Pilot], events: Dict[uuid.UUID, Event],
-                 schedule: List[EventGene]):
+    def __init__(self, pilots: Dict[uuid.UUID, Pilot], events: Dict[uuid.UUID, Event]):
         self.pilots = pilots
         self.events = events
-        self.schedule = schedule
-        self.alleles = self._build_alleles()
+        self.schedule, self.alleles = self._build_sched_and_alleles()
 
     @property
     def pilots(self) -> Dict[uuid.UUID, Pilot]:
@@ -45,8 +43,9 @@ class State():
     def alleles(self, alleles: Dict[uuid.UUID, List[uuid.UUID]]) -> None:
         self._alleles = alleles
 
-    def _build_alleles(self):
+    def _build_sched_and_alleles(self) -> Tuple[List[EventGene], Dict[uuid.UUID, List[uuid.UUID]]]:
         alleles: Dict[uuid.UUID, List[uuid.UUID]] = {}
+        schedule: List[EventGene] = []
         for _, event in self.events.items():
             # for now, assign all pilots to each event
             # eventually this will manage availability and qual constraints
@@ -57,4 +56,5 @@ class State():
             # qual is a quick compare of event required qual to pilot qual. constraint model
             # for consistency worth it?
             alleles[event.id] = [pilot_id for pilot_id in self.pilots]
-        return alleles
+            schedule.append(EventGene(event.id))
+        return schedule, alleles

@@ -6,6 +6,7 @@ from app.models.constraints.crew_day import CrewDay
 from app.models.constraints.no_event_overlap import NoEventOverlap
 
 def calc_fitness(indiv: Individual, *constraints: Constraint) -> int:
+    indiv.fitness = 0
     for event in indiv.schedule:
         for constraint in constraints:
             constraint.each_event(event)

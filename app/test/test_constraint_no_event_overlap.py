@@ -7,13 +7,13 @@ from app.models.state import State
 class ConstraintNoEventOverlapCase(unittest.TestCase):
     # change to test_state events in crew_day.py
     def test_initialize(self):
-        state = State(pilots_overlap, events_overlap, None, None)
+        state = State(pilots_overlap, events_overlap)
         no_overlap_constraint = NoEventOverlap(state)
         self.assertEqual(no_overlap_constraint.get_final_fitness(), 0.0, "Fitness should be set.")
 
     def test_each_event(self):
 
-        state = State(pilots_overlap, events_overlap, None, None)
+        state = State(pilots_overlap, events_overlap)
         no_overlap_constraint = NoEventOverlap(state)
 
         for gene in indiv_overlap:
