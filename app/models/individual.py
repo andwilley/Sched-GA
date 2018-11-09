@@ -2,8 +2,7 @@ from typing import List
 from copy import deepcopy
 import random as rnd
 from app.models.event_gene import EventGene
-# from app.state.sched import sched_alleles
-from app.test.test_state import pop_sched_alleles as sched_alleles
+from app.models.state import State
 
 class Individual():
     """
@@ -13,9 +12,10 @@ class Individual():
         schedule: an array of event and pilot ids
         fitness: the penalty score of this individual
     """
-    def __init__(self, schedule: List[EventGene], fill: bool = True) -> None:
-        self.schedule = deepcopy(schedule)
+    def __init__(self, state: State, fill: bool = True) -> None:
+        self.schedule = deepcopy(state.schedule)
         self.fitness = 0
+        self._state = state
         if fill:
             for gene in self.schedule:
                 self.assign_rand_pilot(gene)
@@ -42,8 +42,13 @@ class Individual():
         """
         Assign random pilot to the passed gene from the event allele.
         """
-        allele_last_index = len(sched_alleles[gene.event_id]) - 1
-        gene.pilot_id = sched_alleles[gene.event_id][rnd.randint(0, allele_last_index)]
+        allele_last_index = len(self._state.alleles[gene.event_id]) - 1
+        gene.pilot_id = self._state.alleles[gene.event_id][rnd.randint(0, allele_last_index)]
+
+    def spawn(self, new_sched: List[EventGene]):
+        indiv = Individual(self._state, fill=False)
+        indiv.schedule = new_sched
+        return indiv
 
     def __lt__(self, other):
         return self.fitness < other.fitness
@@ -69,6 +74,10 @@ class Individual():
     def __repr__(self):
         schedule = []
         for gene in self.schedule:
-            schedule.append(gene.__repr__())
+            schedule.append("event start {}, end {}, desc {}, pilot {}".
+                            format(self._state.events[gene.event_id].start,
+                                   self._state.events[gene.event_id].end,
+                                   self._state.events[gene.event_id].desc,
+                                   self._state.pilots[gene.pilot_id].callsign))
         schedule = "\n".join(schedule)
         return "(Individual: schedule \n{}, fitness {})".format(schedule, self.fitness)

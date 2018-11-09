@@ -1,14 +1,14 @@
 from typing import List
 from bisect import insort
 from app.models.individual import Individual
-from app.models.event_gene import EventGene
 from app.ga.fitness import calc_fitness, get_constraints
 from app.ga.operators import roulette_selection, create_and_mutate_offspring
+from app.models.state import State
 from app.ga.parameters import X_OVER_PTS, MUT_PROB
 
 class Population():
 
-    def __init__(self, size: int, elite_ratio: float, sched: List[EventGene]):
+    def __init__(self, size: int, elite_ratio: float, state: State):
         """
         Creates a list of random individuals as the population
         """
@@ -16,10 +16,11 @@ class Population():
             raise ValueError("elite_ratio must be between 0 and 100")
 
         self.size = size
-        self.population = [Individual(sched) for i in range(self.size)]
+        self.population = [Individual(state=state) for i in range(self.size)]
         self.elite_size = int(elite_ratio * self.size)
         self.elites: List[Individual] = []
         self.max_fitness = 0
+        self._state = state
 
     @property
     def size(self) -> int:
@@ -67,13 +68,14 @@ class Population():
         Calculates and sets the fitness of each individual in the population
         """
         self.elites = []
+        self.max_fitness = 0
         for indiv in self.population:
-            indiv.fitness = calc_fitness(indiv, *get_constraints())
+            indiv.fitness = calc_fitness(indiv, *get_constraints(self._state))
             # fill up elites
             if len(self.elites) < self.elite_size:
                 insort(self.elites, indiv)
             # if elites is full, push one out if this one is better
-            elif indiv.fitness < self.elites[self.elite_size - 1].fitness:
+            elif self.elite_size > 0 and indiv.fitness < self.elites[self.elite_size - 1].fitness:
                 insort(self.elites, indiv)
                 del self.elites[self.elite_size]
             # save the max to invert the fitness and for proportional selection

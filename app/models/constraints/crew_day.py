@@ -3,8 +3,7 @@ from typing import Dict
 import uuid
 from app.models.constraints.constraint import Constraint
 from app.models.event_gene import EventGene
-# from app.state.events import events # comment for tests
-from app.test.test_state import pop_events as events # use for tests
+from app.models.state import State
 from app.constants.opnav import DAY_CREW_DAY, NIGHT_CREW_DAY
 from app.constants.environment import SUNSET
 
@@ -14,9 +13,10 @@ class CrewDay(Constraint):
     Applies a penalty if an overage occurs.
     """
 
-    def __init__(self):
+    def __init__(self, state: State):
         self._fitness = 0.0
         self._crew_hours: Dict[uuid.UUID, Dict[str, datetime]] = {}
+        self._state = state
 
     def each_event(self, gene: EventGene) -> None:
         """
@@ -26,8 +26,8 @@ class CrewDay(Constraint):
         for that pilot's schedule, if any.
         """
         # for the pilot, save the earliest and latest times.
-        event_start = events[gene.event_id].start
-        event_end = events[gene.event_id].end
+        event_start = self._state.events[gene.event_id].start
+        event_end = self._state.events[gene.event_id].end
         if gene.pilot_id in self._crew_hours:
             old_start = self._crew_hours[gene.pilot_id]['start']
             old_end = self._crew_hours[gene.pilot_id]['end']

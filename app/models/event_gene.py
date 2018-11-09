@@ -1,15 +1,10 @@
 import uuid
-from uuid import uuid4
-# from app.state.events import events
-from app.test.test_state import pop_events as events
-# from app.state.pilots import pilots
-from app.test.test_state import pop_pilots as pilots
 
 class EventGene():
 
     def __init__(self, event_id: uuid.UUID) -> None:
         self.event_id = event_id
-        self.pilot_id = uuid4()
+        self.pilot_id = uuid.uuid4()
 
     @property
     def event_id(self) -> uuid.UUID:
@@ -28,8 +23,4 @@ class EventGene():
         self._pilot_id = pilot_id
 
     def __repr__(self):
-        return "event start {} end {} desc {}, pilot {}".format(events[self.event_id].start,
-                                                                events[self.event_id].end,
-                                                                events[self.event_id].desc,
-                                                                pilots[self.pilot_id].callsign)
-        
+        return "event_id {}, pilot_id {}".format(self.event_id, self.pilot_id)

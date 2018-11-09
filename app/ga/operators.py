@@ -3,6 +3,7 @@ from typing import List, Tuple
 from bisect import insort
 from app.models.individual import Individual
 from app.models.event_gene import EventGene
+from app.models.state import State
 
 # operates on population as a list of individuals
 
@@ -67,7 +68,7 @@ def crossover(parent1: Individual, parent2: Individual, pnts: int) -> Tuple[Indi
         assign_to_child2 = parent2.schedule if i % 2 else parent1.schedule
         child1 = child1[:xover] + assign_to_child1[xover:]
         child2 = child2[:xover] + assign_to_child2[xover:]
-    return Individual(child1, fill=False), Individual(child2, fill=False)
+    return parent1.spawn(child1), parent2.spawn(child2)
 
 def mutate(indiv: Individual, prob: float) -> Individual:
     """
