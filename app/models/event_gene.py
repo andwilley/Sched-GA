@@ -22,5 +22,10 @@ class EventGene():
     def pilot_id(self, pilot_id: uuid.UUID):
         self._pilot_id = pilot_id
 
+    def copy(self) -> 'EventGene':
+        gene = EventGene(self.event_id)
+        gene.pilot_id = self.pilot_id
+        return gene
+
     def __repr__(self):
         return "event_id {}, pilot_id {}".format(self.event_id, self.pilot_id)

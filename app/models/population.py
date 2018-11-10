@@ -68,9 +68,9 @@ class Population():
         """
         Calculates and sets the fitness of each individual in the population
         """
-        self.elites = []
         self.max_fitness = 0
         for indiv in self.population:
+            indiv.inverse_fitness = 0
             indiv.fitness = calc_fitness(indiv, *get_constraints(self._state))
             # fill up elites
             if len(self.elites) < self.elite_size:
@@ -88,7 +88,7 @@ class Population():
 
     def _invert_fitness(self) -> None:
         for indiv in self.population:
-            indiv.fitness = self.max_fitness - indiv.fitness
+            indiv.inverse_fitness = self.max_fitness - indiv.fitness
 
     def make_next_generation(self) -> None:
         """

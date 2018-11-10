@@ -1,6 +1,7 @@
 import random as rnd
 from typing import List, Tuple
 from bisect import insort
+from copy import deepcopy
 from app.models.individual import Individual
 from app.models.event_gene import EventGene
 from app.models.state import State
@@ -11,7 +12,8 @@ def roulette_selection(population: List[Individual], num_parents: int) -> List[I
     """
     Select specified num parents by roulette (proportional) selection
     """
-    sum_fit = sum([indiv.fitness for indiv in population])
+    sum_fit = sum([indiv.inverse_fitness for indiv in population])
+    print("sum_fit", sum_fit)
 
     parents = []
     for _ in range(num_parents):
@@ -25,11 +27,12 @@ def roulette_select_one(population: List[Individual], sum_fit: float) -> Individ
     pick = rnd.uniform(0, sum_fit)
     current = 0
     for individual in population:
-        current += individual.fitness
+        current += individual.inverse_fitness
         if current > pick:
             return individual
-    # if we don't get a value, return the last item. this should be exceedingly rare.
-    return population[len(population) - 1]
+    # if we don't get a value, return the first item. this should be exceedingly rare.
+    print("oops")
+    return population[0]
 
 def create_and_mutate_offspring(parents: List[Individual],
                                 points: int,
@@ -61,13 +64,16 @@ def crossover(parent1: Individual, parent2: Individual, pnts: int) -> Tuple[Indi
     xovers: List[int] = []
     for _ in range(pnts):
         insort(xovers, rnd.randint(0, len(parent1) - 1))
-    child1: List[EventGene] = parent1.schedule
-    child2: List[EventGene] = parent2.schedule
-    for i, xover in enumerate(xovers):
-        assign_to_child1 = parent1.schedule if i % 2 else parent2.schedule
-        assign_to_child2 = parent2.schedule if i % 2 else parent1.schedule
-        child1 = child1[:xover] + assign_to_child1[xover:]
-        child2 = child2[:xover] + assign_to_child2[xover:]
+
+    child1: List[EventGene] = []
+    child2: List[EventGene] = []
+    use_prnt1 = True
+    for i, _ in enumerate(parent1.schedule):
+        if xovers and i == xovers[0]:
+            use_prnt1 = not use_prnt1
+            del xovers[0]
+        child1.append(parent1.schedule[i].copy() if use_prnt1 else parent2.schedule[i].copy())
+        child2.append(parent1.schedule[i].copy() if not use_prnt1 else parent2.schedule[i].copy())
     return parent1.spawn(child1), parent2.spawn(child2)
 
 def mutate(indiv: Individual, prob: float) -> Individual:

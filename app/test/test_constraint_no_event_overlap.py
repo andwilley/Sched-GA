@@ -1,6 +1,7 @@
 import unittest
 from app.ga.parameters import OVERLAP_WEIGHT
-from app.test.test_state import indiv_overlap, pilots_overlap, events_overlap
+from app.test.test_state import indiv_overlap, pilots_overlap, events_overlap, spec_events,\
+                                spec_pilots, spec_indiv
 from app.models.constraints.no_event_overlap import NoEventOverlap
 from app.models.state import State
 
@@ -19,5 +20,15 @@ class ConstraintNoEventOverlapCase(unittest.TestCase):
         for gene in indiv_overlap:
             no_overlap_constraint.each_event(gene)
 
-        self.assertEqual(no_overlap_constraint.get_final_fitness(), 22 * OVERLAP_WEIGHT,
-                         "Fitness should be 3 overlaps.")
+        self.assertEqual(no_overlap_constraint.get_final_fitness(), 82 * OVERLAP_WEIGHT,
+                         "Fitness should be 4 overlaps.")
+
+    def test_specific_individual_fitness(self):
+        state = State(spec_pilots, spec_events)
+        no_overlap_constraint = NoEventOverlap(state)
+
+        for gene in spec_indiv:
+            no_overlap_constraint.each_event(gene)
+
+        self.assertEqual(no_overlap_constraint.get_final_fitness(), 180 * OVERLAP_WEIGHT,
+                         "Fitness should be 4 overlaps.")

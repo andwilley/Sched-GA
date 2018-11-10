@@ -15,6 +15,7 @@ class Individual():
     def __init__(self, state: State, fill: bool = True) -> None:
         self.schedule = deepcopy(state.schedule)
         self.fitness = 0
+        self.inverse_fitness = 0
         self._state = state
         if fill:
             for gene in self.schedule:
@@ -38,6 +39,17 @@ class Individual():
             fitness = 0
         self._fitness = fitness
 
+    @property
+    def inverse_fitness(self) -> int:
+        return self._inverse_fitness
+
+    @inverse_fitness.setter
+    def inverse_fitness(self, fitness: int) -> None:
+        if fitness < 0:
+            fitness = 0
+        self._inverse_fitness = fitness
+
+
     def assign_rand_pilot(self, gene: EventGene) -> None:
         """
         Assign random pilot to the passed gene from the event allele.
@@ -45,7 +57,7 @@ class Individual():
         allele_last_index = len(self._state.alleles[gene.event_id]) - 1
         gene.pilot_id = self._state.alleles[gene.event_id][rnd.randint(0, allele_last_index)]
 
-    def spawn(self, new_sched: List[EventGene]):
+    def spawn(self, new_sched: List[EventGene]) -> 'Individual':
         """
         Create a new individual from a modified schedule (xover or mutation done externally)
         """

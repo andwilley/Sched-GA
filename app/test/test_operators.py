@@ -75,13 +75,14 @@ class OperatorsCase(unittest.TestCase):
         for _ in range(num_indivs):
             new_indiv = Individual(state)
             new_indiv.fitness = rnd.uniform(0, num_parents)
+            new_indiv.inverse_fitness = num_parents - new_indiv.fitness
             population.append(new_indiv)
 
         selection = roulette_selection(population, num_parents)
         self.assertEqual(len(selection), num_parents, "should corrent number of parents")
 
-        pop_avg_fit = sum([indiv.fitness for indiv in population])
-        sel_avg_fit = sum([indiv.fitness for indiv in selection])
+        pop_avg_fit = sum([indiv.inverse_fitness for indiv in population])
+        sel_avg_fit = sum([indiv.inverse_fitness for indiv in selection])
         self.assertGreater(sel_avg_fit, pop_avg_fit, "new selection fitness SHOULD be higher. \
             this may not be the case on EVERY run, just most. try the test again.")
 

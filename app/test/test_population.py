@@ -5,7 +5,7 @@ from app.test.test_state import pop_sched, pop_pilots, pop_events, pop_sched_all
 
 class PopulationCase(unittest.TestCase):
     POP_SIZE = 10
-    ELITE_RATIO = .1 # tests written for 1 elite
+    ELITE_RATIO = .3
     X_OVER_PNTS = 1
     MUT_PROB = 0.1
 
@@ -14,8 +14,7 @@ class PopulationCase(unittest.TestCase):
         pop = Population(self.POP_SIZE, self.ELITE_RATIO, self.X_OVER_PNTS, self.MUT_PROB,
                          state=state)
         self.assertEqual(pop.max_fitness, 0, "Max fitness should init to 0")
-        self.assertEqual(pop.elite_size, 1, "Elite size should be 1")
-
+        self.assertEqual(pop.elite_size, 3, "Elite size should be 1")
         pop.size = 20
         self.assertEqual(pop.size, self.POP_SIZE, "Size should not change")
 
@@ -31,7 +30,9 @@ class PopulationCase(unittest.TestCase):
             at_least_one_is_not_zero = True if indiv.fitness > 0 else at_least_one_is_not_zero
             print(indiv)
         self.assertTrue(at_least_one_is_not_zero, "fitness should be set for the population")
-        print(pop.elites)
+        sorted_pop = sorted(pop.population)
+        self.assertEqual(pop.elites, sorted_pop[:pop.elite_size], "elites should be the best")
+
 
     def test_make_next_gen(self):
         state = State(pop_pilots, pop_events)

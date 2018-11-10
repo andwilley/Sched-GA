@@ -22,4 +22,4 @@ for gen in range(MAX_GEN):
     # calc fitness
     population.set_fitness()
 
-print(population.population)
+print("all elites", population.elites[0])
