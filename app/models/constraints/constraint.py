@@ -25,5 +25,5 @@ class Constraint(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_final_fitness(self) -> int:
+    def get_final_fitness(self) -> float:
         pass

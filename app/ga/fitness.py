@@ -4,9 +4,10 @@ from app.models.state import State
 from app.models.constraints.constraint import Constraint
 from app.models.constraints.crew_day import CrewDay
 from app.models.constraints.no_event_overlap import NoEventOverlap
+from app.models.constraints.fair_work_hours import FairWorkHours
 
-def calc_fitness(indiv: Individual, *constraints: Constraint) -> int:
-    fitness = 0
+def calc_fitness(indiv: Individual, *constraints: Constraint) -> float:
+    fitness = 0.0
     for event in indiv.schedule:
         for constraint in constraints:
             constraint.each_event(event)
@@ -15,4 +16,4 @@ def calc_fitness(indiv: Individual, *constraints: Constraint) -> int:
     return fitness
 
 def get_constraints(state: State) -> List[Constraint]:
-    return [CrewDay(state), NoEventOverlap(state)]
+    return [CrewDay(state), NoEventOverlap(state), FairWorkHours(state)]

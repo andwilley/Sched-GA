@@ -4,6 +4,7 @@ import uuid
 from app.models.state import State
 from app.models.constraints.constraint import Constraint
 from app.models.event_gene import EventGene
+from app.ga.parameters import FAIR_HOURS_WEIGHT
 
 class FairWorkHours(Constraint):
     """
@@ -50,7 +51,7 @@ class FairWorkHours(Constraint):
             'end': end,
         }, new_work_minutes)
 
-    def get_final_fitness(self) -> int:
+    def get_final_fitness(self) -> float:
         """
         Return the fitness calculated with each_event().
         """
@@ -60,4 +61,4 @@ class FairWorkHours(Constraint):
         for pilot_id in self._state.pilots:
             work_day = self._crew_hours[pilot_id][1] if pilot_id in self._crew_hours else 0
             fitness += abs(work_day - avg_minutes)
-        return int(fitness)
+        return fitness * FAIR_HOURS_WEIGHT

@@ -13,7 +13,7 @@ class NoEventOverlap(Constraint):
     """
 
     def __init__(self, state: State):
-        self._fitness = 0
+        self._fitness = 0.0
         self._state = state
         self._pilot_events: Dict[uuid.UUID, List[uuid.UUID]] = {}
 
@@ -34,12 +34,12 @@ class NoEventOverlap(Constraint):
                                    max(self._state.events[event_id].start,
                                        self._state.events[gene.event_id].start)
                 if delta > timedelta(0):
-                    self._fitness += delta.seconds // 60
+                    self._fitness += delta.seconds / 60
             self._pilot_events[gene.pilot_id].append(gene.event_id)
         else:
             self._pilot_events[gene.pilot_id] = [gene.event_id]
 
-    def get_final_fitness(self) -> int:
+    def get_final_fitness(self) -> float:
         """
         Return the fitness calculated with each_event().
         """

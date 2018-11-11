@@ -18,7 +18,7 @@ class Population():
         self.population = [Individual(state=state) for i in range(self.size)]
         self.elite_size = int(elite_ratio * self.size)
         self.elites: List[Individual] = []
-        self.max_fitness = 0
+        self.max_fitness = 0.0
         self._state = state
         self._x_ovr_pts = x_ovr_pts
         self._mut_prb = mut_prb
@@ -59,6 +59,14 @@ class Population():
     def elite_size(self, elite_size: int) -> None:
         self._elite_size = elite_size
 
+    @property
+    def max_fitness(self) -> float:
+        return self._max_fitness
+
+    @max_fitness.setter
+    def max_fitness(self, fitness: float) -> None:
+        self._max_fitness = fitness
+
     def merge_and_set_populations(self, pop1: List[Individual], pop2: List[Individual]):
         if len(pop1) + len(pop2) != self.size:
             raise ValueError("Invalid population size.")
@@ -68,7 +76,7 @@ class Population():
         """
         Calculates and sets the fitness of each individual in the population
         """
-        self.max_fitness = 0
+        self.max_fitness = 0.0
         for indiv in self.population:
             indiv.inverse_fitness = 0
             indiv.fitness = calc_fitness(indiv, *get_constraints(self._state))

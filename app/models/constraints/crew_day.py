@@ -6,6 +6,7 @@ from app.models.event_gene import EventGene
 from app.models.state import State
 from app.constants.opnav import DAY_CREW_DAY, NIGHT_CREW_DAY
 from app.constants.environment import SUNSET
+from app.ga.parameters import CREWDAY_WEIGHT
 
 class CrewDay(Constraint):
     """
@@ -52,11 +53,11 @@ class CrewDay(Constraint):
             'end': end,
         }
 
-    def get_final_fitness(self) -> int:
+    def get_final_fitness(self) -> float:
         """
         Return the fitness calculated with each_event().
         """
-        return int(self._fitness)
+        return self._fitness * CREWDAY_WEIGHT
 
     @staticmethod
     def minutes_over_crew_day(start: datetime, end: datetime) -> float:

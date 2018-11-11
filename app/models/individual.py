@@ -14,8 +14,8 @@ class Individual():
     """
     def __init__(self, state: State, fill: bool = True) -> None:
         self.schedule = deepcopy(state.schedule)
-        self.fitness = 0
-        self.inverse_fitness = 0
+        self.fitness = 0.0
+        self.inverse_fitness = 0.0
         self._state = state
         if fill:
             for gene in self.schedule:
@@ -30,21 +30,21 @@ class Individual():
         self._schedule = schedule
 
     @property
-    def fitness(self) -> int:
+    def fitness(self) -> float:
         return self._fitness
 
     @fitness.setter
-    def fitness(self, fitness: int):
+    def fitness(self, fitness: float):
         if fitness < 0:
             fitness = 0
         self._fitness = fitness
 
     @property
-    def inverse_fitness(self) -> int:
+    def inverse_fitness(self) -> float:
         return self._inverse_fitness
 
     @inverse_fitness.setter
-    def inverse_fitness(self, fitness: int) -> None:
+    def inverse_fitness(self, fitness: float) -> None:
         if fitness < 0:
             fitness = 0
         self._inverse_fitness = fitness
