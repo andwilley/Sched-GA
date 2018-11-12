@@ -13,7 +13,6 @@ def roulette_selection(population: List[Individual], num_parents: int) -> List[I
     Select specified num parents by roulette (proportional) selection
     """
     sum_fit = sum([indiv.inverse_fitness for indiv in population])
-    print("sum_fit", sum_fit)
 
     parents = []
     for _ in range(num_parents):
@@ -25,13 +24,12 @@ def roulette_select_one(population: List[Individual], sum_fit: float) -> Individ
     Select one parent via roulette
     """
     pick = rnd.uniform(0, sum_fit)
-    current = 0
+    current = 0.0
     for individual in population:
         current += individual.inverse_fitness
         if current > pick:
             return individual
     # if we don't get a value, return the first item. this should be exceedingly rare.
-    print("oops")
     return population[0]
 
 def create_and_mutate_offspring(parents: List[Individual],

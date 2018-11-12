@@ -1,7 +1,8 @@
 import unittest
 from app.ga.parameters import OVERLAP_WEIGHT
-from app.test.test_state import indiv_overlap, pilots_overlap, events_overlap, spec_events,\
-                                spec_pilots, spec_indiv
+from app.test.state.constraint_no_event_overlap import indiv_overlap, pilots_overlap, \
+                                                       events_overlap, spec_events,\
+                                                       spec_pilots, spec_indiv
 from app.models.constraints.no_event_overlap import NoEventOverlap
 from app.models.state import State
 

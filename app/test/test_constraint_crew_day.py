@@ -1,7 +1,8 @@
 import unittest
-from app.test.test_state import indiv_crewday, cd_pilots, events
+from app.test.state.constraint_crew_day_test import indiv_crewday, cd_pilots, events
 from app.models.constraints.crew_day import CrewDay
 from app.models.state import State
+from app.ga.parameters import CREWDAY_WEIGHT
 
 class ConstraintCrewDayCase(unittest.TestCase):
     # change to test_state events in crew_day.py
@@ -18,5 +19,5 @@ class ConstraintCrewDayCase(unittest.TestCase):
         for gene in indiv_crewday:
             crew_day_constraint.each_event(gene)
 
-        self.assertEqual(crew_day_constraint.get_final_fitness(), 60 * 3,
+        self.assertEqual(crew_day_constraint.get_final_fitness(), 60 * 3 * CREWDAY_WEIGHT,
                          "Fitness should be 3 hours.")

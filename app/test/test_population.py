@@ -1,7 +1,7 @@
 import unittest
 from app.models.population import Population
 from app.models.state import State
-from app.test.test_state import pop_sched, pop_pilots, pop_events, pop_sched_alleles
+from app.test.state.population_test import pop_pilots, pop_events
 
 class PopulationCase(unittest.TestCase):
     POP_SIZE = 10

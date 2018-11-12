@@ -2,7 +2,7 @@ import unittest
 import uuid
 from app.models.individual import Individual
 from app.models.state import State
-from app.test.test_state import schedule, sched_alleles, op_events, op_pilots
+from app.test.state.operators_test import op_events, op_pilots
 
 class IndividualCase(unittest.TestCase):
 

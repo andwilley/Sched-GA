@@ -3,7 +3,7 @@ import random as rnd
 from app.ga.operators import roulette_selection, create_and_mutate_offspring, crossover, mutate
 from app.models.individual import Individual
 from app.models.state import State
-from app.test.test_state import schedule, sched_alleles, op_events, op_pilots
+from app.test.state.operators_test import op_events, op_pilots
 
 class OperatorsCase(unittest.TestCase):
 
