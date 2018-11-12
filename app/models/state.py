@@ -2,13 +2,17 @@ import uuid
 from typing import Dict, List, Tuple
 from app.models.pilot import Pilot
 from app.models.event import Event
+from app.models.sniv import Sniv
 from app.models.event_gene import EventGene
 
 class State():
 
-    def __init__(self, pilots: Dict[uuid.UUID, Pilot], events: Dict[uuid.UUID, Event]):
+    def __init__(self, pilots: Dict[uuid.UUID, Pilot], events: Dict[uuid.UUID, Event],
+                 snivs: Dict[uuid.UUID, Sniv]):
         self.pilots = pilots
         self.events = events
+        self.snivs = snivs
+        self.add_snivs_to_pilots()
         self.schedule, self.alleles = self._build_sched_and_alleles()
 
     @property
@@ -43,6 +47,10 @@ class State():
     def alleles(self, alleles: Dict[uuid.UUID, List[uuid.UUID]]) -> None:
         self._alleles = alleles
 
+    def add_snivs_to_pilots(self) -> None:
+        for _, sniv in self.snivs.items():
+            self.pilots[sniv.pilot_id].snivs.append(sniv.id)
+
     def _build_sched_and_alleles(self) -> Tuple[List[EventGene], Dict[uuid.UUID, List[uuid.UUID]]]:
         alleles: Dict[uuid.UUID, List[uuid.UUID]] = {}
         schedule: List[EventGene] = []
@@ -55,6 +63,18 @@ class State():
             #
             # qual is a quick compare of event required qual to pilot qual. constraint model
             # for consistency worth it?
-            alleles[event.id] = [pilot_id for pilot_id in self.pilots]
+
+            # for each pilot sniv, check against the event
+            pilot_available: Dict[uuid.UUID, bool] = {}
+            for _, pilot in self.pilots.items():
+                pilot_available[pilot.id] = True
+                for sniv_id in pilot.snivs:
+                    pilot_available[pilot.id] = False if max(self.events[event.id].start,
+                                                             self.snivs[sniv_id].start) < \
+                                                         min(self.events[event.id].end,
+                                                             self.snivs[sniv_id].end) \
+                                                      else pilot_available[pilot.id]
+            alleles[event.id] = [pilot_id for pilot_id in self.pilots \
+                if event.qual_req in self.pilots[pilot_id].quals and pilot_available]
             schedule.append(EventGene(event.id))
         return schedule, alleles

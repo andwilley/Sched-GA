@@ -1,13 +1,14 @@
 from app.models.pilot import Pilot
+from app.constants.quals import TRANS, STK, A2A, CQ
 
-pilot1 = Pilot("Steam")
-pilot2 = Pilot("Virgil")
-pilot3 = Pilot("Dump")
-pilot4 = Pilot("Beef")
-pilot5 = Pilot("Space")
-pilot6 = Pilot("Jambles")
-pilot7 = Pilot("Cox")
-pilot8 = Pilot("Tummy")
+pilot1 = Pilot("Steam", [TRANS, STK, A2A])
+pilot2 = Pilot("Virgil", [TRANS, A2A])
+pilot3 = Pilot("Dump", [TRANS, STK, A2A])
+pilot4 = Pilot("Beef", [TRANS])
+pilot5 = Pilot("Space", [TRANS, STK])
+pilot6 = Pilot("Jambles", [TRANS, STK])
+pilot7 = Pilot("Cox", [TRANS, STK, CQ])
+pilot8 = Pilot("Tummy", [TRANS, STK, CQ])
 
 pilots = {
     pilot1.id: pilot1,

@@ -3,12 +3,12 @@ from datetime import datetime
 
 class Event():
 
-    def __init__(self, start: datetime, end: datetime, desc: str) -> None:
+    def __init__(self, start: datetime, end: datetime, desc: str, qual_req: str) -> None:
         self.id = uuid.uuid4()
         self.start = start
         self.end = end
         self.desc = desc
-        # self.qual = qual
+        self.qual_req = qual_req
 
     @property
     def id(self) -> uuid.UUID:
@@ -42,6 +42,14 @@ class Event():
     def desc(self, desc: str):
         self._desc = desc
 
+    @property
+    def qual_req(self) -> str:
+        return self._qual_req
+
+    @qual_req.setter
+    def qual_req(self, qual_req: str):
+        self._qual_req = qual_req
+
     def __repr__(self):
-        return "eventId {}, start {}, end {}, desc {}".format(
-            self.id, self.start, self.end, self.desc)
+        return "eventId {}, start {}, end {}, desc {}, qual {}".format(
+            self.id, self.start, self.end, self.desc, self.qual_req)

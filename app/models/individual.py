@@ -65,6 +65,12 @@ class Individual():
         indiv.schedule = new_sched
         return indiv
 
+    def crew_string(self) -> str:
+        cstr = ''
+        for gene in self.schedule:
+            cstr += gene.pilot_id.hex
+        return cstr
+
     def __lt__(self, other):
         return self.fitness < other.fitness
 
@@ -89,10 +95,11 @@ class Individual():
     def __repr__(self):
         schedule = []
         for gene in self.schedule:
-            schedule.append("event start {}, end {}, desc {}, pilot {}".
+            schedule.append("event start {}, end {}, desc {}, pilot {},\tqual_req {}".
                             format(self._state.events[gene.event_id].start,
                                    self._state.events[gene.event_id].end,
                                    self._state.events[gene.event_id].desc,
-                                   self._state.pilots[gene.pilot_id].callsign))
+                                   self._state.pilots[gene.pilot_id].callsign,
+                                   self._state.events[gene.event_id].qual_req))
         schedule = "\n".join(schedule)
         return "(Individual: schedule \n{}, fitness {})".format(schedule, self.fitness)

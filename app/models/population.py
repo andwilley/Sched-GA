@@ -1,18 +1,19 @@
-from typing import List
 from bisect import insort
+from typing import List, Set
+from app.models.state import State
 from app.models.individual import Individual
 from app.ga.fitness import calc_fitness, get_constraints
 from app.ga.operators import roulette_selection, create_and_mutate_offspring
-from app.models.state import State
 
 class Population():
 
-    def __init__(self, size: int, elite_ratio: float, x_ovr_pts: int, mut_prb: float, state: State):
+    def __init__(self, size: int, elite_ratio: float, diverse_elite: bool, x_ovr_pts: int,
+                 mut_prb: float, state: State):
         """
         Creates a list of random individuals as the population
         """
-        if not 0 <= elite_ratio <= 1:
-            raise ValueError("elite_ratio must be between 0 and 100")
+        if not 0 <= elite_ratio <= 1 or not 0 <= mut_prb <= 1 or x_ovr_pts < 0 or size < 1:
+            raise ValueError("One or more arguments for Population is outside the allowed range.")
 
         self.size = size
         self.population = [Individual(state=state) for i in range(self.size)]
@@ -22,6 +23,8 @@ class Population():
         self._state = state
         self._x_ovr_pts = x_ovr_pts
         self._mut_prb = mut_prb
+        self._elite_set: Set[str] = set()
+        self._diverse_elite = diverse_elite
 
     @property
     def size(self) -> int:
@@ -74,20 +77,31 @@ class Population():
 
     def set_fitness(self) -> None:
         """
-        Calculates and sets the fitness of each individual in the population
+        Calculates and sets the fitness of each individual in the population.
+        Maintains the elites array with the best solutions found.
+        If diverse elites is true, enforces uniqueness in elites.
         """
         self.max_fitness = 0.0
         for indiv in self.population:
             indiv.inverse_fitness = 0
             indiv.fitness = calc_fitness(indiv, *get_constraints(self._state))
             # fill up elites
-            if len(self.elites) < self.elite_size:
+            if ((len(self.elites) < self.elite_size)
+                    and ((self._diverse_elite and indiv.crew_string() not in self._elite_set)
+                         or not self._diverse_elite)):
                 insort(self.elites, indiv)
+                if self._diverse_elite:
+                    self._elite_set.add(indiv.crew_string())
             # if elites is full, push one out if this one is better
-            elif self.elite_size > 0 and indiv.fitness < self.elites[self.elite_size - 1].fitness:
+            elif ((self.elite_size > 0 and indiv.fitness < self.elites[self.elite_size - 1].fitness)
+                  and ((self._diverse_elite and indiv.crew_string() not in self._elite_set)
+                       or not self._diverse_elite)):
                 insort(self.elites, indiv)
+                if self._diverse_elite:
+                    self._elite_set.add(indiv.crew_string())
+                    self._elite_set.remove(self.elites[self.elite_size].crew_string())
                 del self.elites[self.elite_size]
-            # save the max to invert the fitness and for proportional selection
+            # save the max to invert the fitness, for proportional selection
             if indiv.fitness > self.max_fitness:
                 self.max_fitness = indiv.fitness
 
@@ -112,5 +126,5 @@ class Population():
         # add elites and set population
         self.population = self.elites + children
 
-    def __repr__(self):
-        return "(Population: )"
+    def __repr__(self) -> str:
+        return "(Population: {})".format(self.population)
