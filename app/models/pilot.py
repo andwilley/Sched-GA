@@ -4,12 +4,12 @@ from app.models.sniv import Sniv
 
 class Pilot():
 
-    def __init__(self, callsign: str = '', quals: List[str] = [],
-                 snivs: List[uuid.UUID] = []) -> None:
+    def __init__(self, callsign: str = '', quals: List[str] = None,
+                 snivs: List[uuid.UUID] = None) -> None:
         self.id = uuid.uuid4()
         self.callsign = callsign
-        self.quals = quals
-        self.snivs = snivs
+        self.quals = quals if quals else []
+        self.snivs = snivs if snivs else []
 
     @property
     def id(self) -> uuid.UUID:

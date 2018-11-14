@@ -75,6 +75,8 @@ class State():
                                                              self.snivs[sniv_id].end) \
                                                       else pilot_available[pilot.id]
             alleles[event.id] = [pilot_id for pilot_id in self.pilots \
-                if event.qual_req in self.pilots[pilot_id].quals and pilot_available]
+                if (event.qual_req in self.pilots[pilot_id].quals and pilot_available[pilot_id])]
+            if not alleles[event.id]:
+                raise ValueError("It looks like no one is available for event: {}".format(event.id))
             schedule.append(EventGene(event.id))
         return schedule, alleles

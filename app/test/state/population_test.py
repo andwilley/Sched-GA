@@ -2,30 +2,31 @@ from datetime import datetime
 from app.models.event import Event
 from app.models.pilot import Pilot
 from app.models.event_gene import EventGene
+from app.constants.quals import TRANS
 
 """
 Population Test State (2x)
 """
 
-event20 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 8, 0), "flight")
-event21 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 8, 0), "flight")
-event22 = Event(datetime(2019, 1, 1, 9, 0), datetime(2019, 1, 1, 10, 0), "flight")
-event23 = Event(datetime(2019, 1, 1, 9, 0), datetime(2019, 1, 1, 10, 0), "flight")
-event24 = Event(datetime(2019, 1, 1, 13, 0), datetime(2019, 1, 1, 14, 0), "flight")
-event25 = Event(datetime(2019, 1, 1, 13, 0), datetime(2019, 1, 1, 14, 0), "flight")
-event26 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight")
-event27 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight")
-event28 = Event(datetime(2019, 1, 1, 22, 0), datetime(2019, 1, 1, 23, 0), "flight")
-event29 = Event(datetime(2019, 1, 1, 22, 0), datetime(2019, 1, 1, 23, 0), "flight")
+event20 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 8, 0), "flight", TRANS)
+event21 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 8, 0), "flight", TRANS)
+event22 = Event(datetime(2019, 1, 1, 9, 0), datetime(2019, 1, 1, 10, 0), "flight", TRANS)
+event23 = Event(datetime(2019, 1, 1, 9, 0), datetime(2019, 1, 1, 10, 0), "flight", TRANS)
+event24 = Event(datetime(2019, 1, 1, 13, 0), datetime(2019, 1, 1, 14, 0), "flight", TRANS)
+event25 = Event(datetime(2019, 1, 1, 13, 0), datetime(2019, 1, 1, 14, 0), "flight", TRANS)
+event26 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight", TRANS)
+event27 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight", TRANS)
+event28 = Event(datetime(2019, 1, 1, 22, 0), datetime(2019, 1, 1, 23, 0), "flight", TRANS)
+event29 = Event(datetime(2019, 1, 1, 22, 0), datetime(2019, 1, 1, 23, 0), "flight", TRANS)
 
-pilot20 = Pilot("Steamboat")
-pilot21 = Pilot("Dump")
-pilot22 = Pilot("Tummy")
-pilot23 = Pilot("Virgil")
-pilot24 = Pilot("Topper")
-pilot25 = Pilot("Spacecamp")
-pilot26 = Pilot("Jambles")
-pilot27 = Pilot("Beef")
+pilot20 = Pilot("Steamboat", [TRANS])
+pilot21 = Pilot("Dump", [TRANS])
+pilot22 = Pilot("Tummy", [TRANS])
+pilot23 = Pilot("Virgil", [TRANS])
+pilot24 = Pilot("Topper", [TRANS])
+pilot25 = Pilot("Spacecamp", [TRANS])
+pilot26 = Pilot("Jambles", [TRANS])
+pilot27 = Pilot("Beef", [TRANS])
 
 pop_pilots = {
     pilot20.id: pilot20,

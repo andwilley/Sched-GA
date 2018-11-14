@@ -1,4 +1,5 @@
 import unittest
+from typing import Any
 from app.models.population import Population
 from app.models.state import State
 from app.test.state.population_test import pop_pilots, pop_events
@@ -8,10 +9,11 @@ class PopulationCase(unittest.TestCase):
     ELITE_RATIO = .3
     X_OVER_PNTS = 1
     MUT_PROB = 0.1
+    snivs: Any = {}
 
     def test_initialize(self):
-        state = State(pop_pilots, pop_events)
-        pop = Population(self.POP_SIZE, self.ELITE_RATIO, self.X_OVER_PNTS, self.MUT_PROB,
+        state = State(pop_pilots, pop_events, self.snivs)
+        pop = Population(self.POP_SIZE, self.ELITE_RATIO, True, self.X_OVER_PNTS, self.MUT_PROB,
                          state=state)
         self.assertEqual(pop.max_fitness, 0, "Max fitness should init to 0")
         self.assertEqual(pop.elite_size, 3, "Elite size should be 1")
@@ -19,8 +21,8 @@ class PopulationCase(unittest.TestCase):
         self.assertEqual(pop.size, self.POP_SIZE, "Size should not change")
 
     def test_set_fitness(self):
-        state = State(pop_pilots, pop_events)
-        pop = Population(self.POP_SIZE, self.ELITE_RATIO, self.X_OVER_PNTS, self.MUT_PROB,
+        state = State(pop_pilots, pop_events, self.snivs)
+        pop = Population(self.POP_SIZE, self.ELITE_RATIO, True, self.X_OVER_PNTS, self.MUT_PROB,
                          state=state)
         pop.set_fitness()
         self.assertEqual(len(pop.elites), pop.elite_size, "Elites should be correct size")
@@ -35,8 +37,8 @@ class PopulationCase(unittest.TestCase):
 
 
     def test_make_next_gen(self):
-        state = State(pop_pilots, pop_events)
-        pop = Population(self.POP_SIZE, self.ELITE_RATIO, self.X_OVER_PNTS, self.MUT_PROB,
+        state = State(pop_pilots, pop_events, self.snivs)
+        pop = Population(self.POP_SIZE, self.ELITE_RATIO, True, self.X_OVER_PNTS, self.MUT_PROB,
                          state=state)
         pop.set_fitness()
         elite = pop.elites[0]

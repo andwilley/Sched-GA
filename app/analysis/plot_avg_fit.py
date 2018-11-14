@@ -12,5 +12,5 @@ def plot_avg_fit(averages):
     axes.set(xlabel='generation', ylabel='average fitness', title=title)
     axes.grid()
 
-    fig.savefig("test.png")
+    fig.savefig("tmp/test.png")
     plt.show()
