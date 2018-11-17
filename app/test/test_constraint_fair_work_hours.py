@@ -7,13 +7,13 @@ from app.ga.parameters import FAIR_HOURS_WEIGHT
 class ConstraintFairWorkHoursCase(unittest.TestCase):
     # change to test_state events in crew_day.py
     def test_initialize(self):
-        state = State(pilots, events)
+        state = State(pilots, events, {})
         fair_hours_constraint = FairWorkHours(state)
         self.assertEqual(fair_hours_constraint.get_final_fitness(), 0.0, "Fitness should be set.")
 
     def test_each_event_with_penalty(self):
 
-        state = State(pilots, events)
+        state = State(pilots, events, {})
         fair_hours_constraint = FairWorkHours(state)
 
         for gene in indiv1:
@@ -24,7 +24,7 @@ class ConstraintFairWorkHoursCase(unittest.TestCase):
 
     def test_each_event_no_penalty(self):
 
-        state = State(pilots, events)
+        state = State(pilots, events, {})
         fair_hours_constraint = FairWorkHours(state)
 
         for gene in indiv2:

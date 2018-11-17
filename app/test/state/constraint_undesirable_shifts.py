@@ -5,16 +5,17 @@ from app.models.event import Event
 from app.models.pilot import Pilot
 from app.models.event_gene import EventGene
 from app.constants.quals import TRANS
+from app.constants.event_types import FLIGHT, SIM, ODO
 
 # avg = 3 hours, 2 hours penalty for 1 and 3
-event1 = Event(datetime(2019, 1, 1, 6, 0), datetime(2019, 1, 1, 7, 0), "flight", TRANS)
-event2 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), "flight", TRANS)
-event3 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 15, 0), "flight", TRANS)
+event1 = Event(datetime(2019, 1, 1, 6, 0), datetime(2019, 1, 1, 7, 0), FLIGHT, TRANS)
+event2 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), ODO, TRANS)
+event3 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 15, 0), SIM, TRANS)
 
 # avg = 3 hours, no penalties
-event4 = Event(datetime(2019, 1, 1, 6, 0), datetime(2019, 1, 1, 9, 0), "flight", TRANS)
-event5 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), "flight", TRANS)
-event6 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), "flight", TRANS)
+event4 = Event(datetime(2019, 1, 1, 6, 0), datetime(2019, 1, 1, 9, 0), FLIGHT, TRANS)
+event5 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), FLIGHT, TRANS)
+event6 = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), FLIGHT, TRANS)
 
 events: Dict[uuid.UUID, Event] = {
     event1.id: event1,
@@ -56,5 +57,4 @@ gene6 = EventGene(event6.id)
 gene6.pilot_id = pilot3.id
 
 # make individual
-indiv1 = [gene1, gene2, gene3]
-indiv2 = [gene4, gene5, gene6]
+indiv1 = [gene1, gene2, gene3, gene4, gene5, gene6]

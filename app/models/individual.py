@@ -95,7 +95,7 @@ class Individual():
     def __repr__(self):
         schedule = []
         for gene in self.schedule:
-            schedule.append("event start {}, end {}, desc {}, pilot {},\tqual_req {}".
+            schedule.append("event start {}, end {}, desc {},\tpilot {},\tqual_req {}".
                             format(self._state.events[gene.event_id].start,
                                    self._state.events[gene.event_id].end,
                                    self._state.events[gene.event_id].desc,

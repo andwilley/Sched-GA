@@ -2,7 +2,7 @@
 The GA parameters
 """
 
-# General population params
+# General ga params
 MAX_GEN = 100
 POP_SIZE = 100
 
@@ -16,3 +16,4 @@ MUT_PROB = 0.01
 CREWDAY_WEIGHT = 5
 OVERLAP_WEIGHT = 7
 FAIR_HOURS_WEIGHT = 2
+UNDESIRABLE_SHIFT_WEIGHT = 2

@@ -4,6 +4,7 @@ from datetime import datetime
 from app.models.event import Event
 from app.models.pilot import Pilot
 from app.models.event_gene import EventGene
+from app.constants.quals import TRANS
 
 """
 Event Overlap test state (1x)
@@ -20,21 +21,21 @@ Event Overlap test state (1x)
 # total of 3 overlaps
 
 # baseline event
-event11 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), "flight")
+event11 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), "flight", TRANS)
 # a - overlap start
-event12 = Event(datetime(2019, 1, 1, 9, 30), datetime(2019, 1, 1, 10, 1), "flight")
+event12 = Event(datetime(2019, 1, 1, 9, 30), datetime(2019, 1, 1, 10, 1), "flight", TRANS)
 # b - overlap end
-event13 = Event(datetime(2019, 1, 1, 10, 59), datetime(2019, 1, 1, 11, 30), "flight")
+event13 = Event(datetime(2019, 1, 1, 10, 59), datetime(2019, 1, 1, 11, 30), "flight", TRANS)
 # c - total overlap
-event14 = Event(datetime(2019, 1, 1, 10, 20), datetime(2019, 1, 1, 10, 40), "flight")
+event14 = Event(datetime(2019, 1, 1, 10, 20), datetime(2019, 1, 1, 10, 40), "flight", TRANS)
 # d - does not conflict
-event15 = Event(datetime(2019, 1, 1, 13, 0), datetime(2019, 1, 1, 14, 0), "flight")
+event15 = Event(datetime(2019, 1, 1, 13, 0), datetime(2019, 1, 1, 14, 0), "flight", TRANS)
 # e - does not conflict (end and start same)
-event16 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight")
+event16 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight", TRANS)
 # f - full overlap with g
-event17 = Event(datetime(2019, 1, 1, 8, 0), datetime(2019, 1, 1, 9, 0), "flight")
+event17 = Event(datetime(2019, 1, 1, 8, 0), datetime(2019, 1, 1, 9, 0), "flight", TRANS)
 # g - full overlap with f
-event18 = Event(datetime(2019, 1, 1, 8, 0), datetime(2019, 1, 1, 9, 0), "flight")
+event18 = Event(datetime(2019, 1, 1, 8, 0), datetime(2019, 1, 1, 9, 0), "flight", TRANS)
 
 events_overlap: Dict[uuid.UUID, Event] = {
     event11.id: event11,
@@ -48,7 +49,7 @@ events_overlap: Dict[uuid.UUID, Event] = {
 }
 
 # pilots
-pilot11 = Pilot()
+pilot11 = Pilot("Steam", [TRANS])
 pilots_overlap = {pilot11.id: pilot11}
 
 # make event genes
@@ -80,16 +81,16 @@ gene18.pilot_id = pilot11.id
 indiv_overlap = [gene11, gene12, gene13, gene14, gene15, gene16, gene17, gene18]
 
 # problematic test case:
-eventa = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), "flight")
-eventb = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), "flight")
-eventc = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), "flight")
-eventd = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), "flight")
-evente = Event(datetime(2019, 1, 1, 15, 0), datetime(2019, 1, 1, 16, 0), "flight")
-eventf = Event(datetime(2019, 1, 1, 15, 0), datetime(2019, 1, 1, 16, 0), "flight")
-eventg = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), "flight")
-eventh = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), "flight")
-eventi = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight")
-eventj = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight")
+eventa = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), "flight", TRANS)
+eventb = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), "flight", TRANS)
+eventc = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), "flight", TRANS)
+eventd = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), "flight", TRANS)
+evente = Event(datetime(2019, 1, 1, 15, 0), datetime(2019, 1, 1, 16, 0), "flight", TRANS)
+eventf = Event(datetime(2019, 1, 1, 15, 0), datetime(2019, 1, 1, 16, 0), "flight", TRANS)
+eventg = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), "flight", TRANS)
+eventh = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), "flight", TRANS)
+eventi = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight", TRANS)
+eventj = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight", TRANS)
 
 spec_events: Dict[uuid.UUID, Event] = {
     eventa.id: eventa,
@@ -104,14 +105,14 @@ spec_events: Dict[uuid.UUID, Event] = {
     eventj.id: eventj,
 }
 
-pilota = Pilot("Steam")
-pilotb = Pilot("Virgil")
-pilotc = Pilot("Dump")
-pilotd = Pilot("Beef")
-pilote = Pilot("Space")
-pilotf = Pilot("Jambles")
-pilotg = Pilot("Cox")
-piloth = Pilot("Tummy")
+pilota = Pilot("Steam", [TRANS])
+pilotb = Pilot("Virgil", [TRANS])
+pilotc = Pilot("Dump", [TRANS])
+pilotd = Pilot("Beef", [TRANS])
+pilote = Pilot("Space", [TRANS])
+pilotf = Pilot("Jambles", [TRANS])
+pilotg = Pilot("Cox", [TRANS])
+piloth = Pilot("Tummy", [TRANS])
 
 spec_pilots = {
     pilota.id: pilota,

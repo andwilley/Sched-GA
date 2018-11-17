@@ -8,10 +8,10 @@ from app.models.event_gene import EventGene
 class State():
 
     def __init__(self, pilots: Dict[uuid.UUID, Pilot], events: Dict[uuid.UUID, Event],
-                 snivs: Dict[uuid.UUID, Sniv]):
+                 snivs: Dict[uuid.UUID, Sniv] = None):
         self.pilots = pilots
         self.events = events
-        self.snivs = snivs
+        self.snivs = snivs if snivs else {}
         self.add_snivs_to_pilots()
         self.schedule, self.alleles = self._build_sched_and_alleles()
 
