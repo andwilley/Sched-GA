@@ -2,19 +2,19 @@ import uuid
 from typing import Dict
 from datetime import datetime
 from app.models.event import Event
-from app.constants.quals import TRANS, STK, A2A, CQ
+import app.constants.quals as quls
 from app.constants.event_types import FLIGHT, SIM, ODO
 
-event1 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), ODO, TRANS)
-event2 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), FLIGHT, TRANS)
-event3 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), SIM, STK)
-event4 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), FLIGHT, STK)
-event5 = Event(datetime(2019, 1, 1, 15, 0), datetime(2019, 1, 1, 16, 0), ODO, STK)
-event6 = Event(datetime(2019, 1, 1, 15, 0), datetime(2019, 1, 1, 16, 0), FLIGHT, STK)
-event7 = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), SIM, A2A)
-event8 = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), FLIGHT, A2A)
-event9 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), ODO, TRANS)
-event10 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), FLIGHT, CQ)
+event1 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), ODO, quls.TRANS)
+event2 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), FLIGHT, quls.TRANS, False)
+event3 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), SIM, quls.STK)
+event4 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), FLIGHT, quls.STK)
+event5 = Event(datetime(2019, 1, 1, 15, 0), datetime(2019, 1, 1, 16, 0), ODO, quls.STK)
+event6 = Event(datetime(2019, 1, 1, 15, 0), datetime(2019, 1, 1, 16, 0), FLIGHT, quls.STK)
+event7 = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), SIM, quls.FWT1)
+event8 = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), FLIGHT, quls.FWT1)
+event9 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), ODO, quls.TRANS)
+event10 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), FLIGHT, quls.CQ)
 
 # event11 = Event(datetime(2019, 1, 1, 8, 0), datetime(2019, 1, 1, 9, 15), FLIGHT)
 # event12 = Event(datetime(2019, 1, 1, 8, 0), datetime(2019, 1, 1, 9, 15), FLIGHT)

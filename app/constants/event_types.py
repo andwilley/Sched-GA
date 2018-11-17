@@ -1,3 +1,5 @@
 FLIGHT = "flight"
 SIM = "sim"
 ODO = "odo"
+CLS = "cls"
+LSO = "lso"

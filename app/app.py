@@ -29,7 +29,7 @@ def main():
         population.make_next_generation()
         # calc fitness
         population.set_fitness()
-        # print each generation's average fitness
+        # save each generation's average fitness
         tot_fit = sum([indiv.fitness for indiv in population.population])
         avg_fits = np.append(avg_fits, tot_fit / population.size)
         print(".", end='', flush=True)

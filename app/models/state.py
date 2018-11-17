@@ -55,15 +55,6 @@ class State():
         alleles: Dict[uuid.UUID, List[uuid.UUID]] = {}
         schedule: List[EventGene] = []
         for _, event in self.events.items():
-            # for now, assign all pilots to each event
-            # eventually this will manage availability and qual constraints
-            # can use the constraint model and loop for each pilot on each event:
-            # pass in the event in question first, then loop through the pilot's snivs
-            # if fitness is greater than 0, ingore that pilot, otherwise add to the list
-            #
-            # qual is a quick compare of event required qual to pilot qual. constraint model
-            # for consistency worth it?
-
             # for each pilot sniv, check against the event
             pilot_available: Dict[uuid.UUID, bool] = {}
             for _, pilot in self.pilots.items():
@@ -74,8 +65,11 @@ class State():
                                                          min(self.events[event.id].end,
                                                              self.snivs[sniv_id].end) \
                                                       else pilot_available[pilot.id]
+            # put pilot_id in allele if has qual, is available and is a pilot if needs to be
             alleles[event.id] = [pilot_id for pilot_id in self.pilots \
-                if (event.qual_req in self.pilots[pilot_id].quals and pilot_available[pilot_id])]
+                if (event.qual_req in self.pilots[pilot_id].quals and pilot_available[pilot_id]
+                    and (self.pilots[pilot_id].plt or (not self.pilots[pilot_id].plt and
+                                                       not self.events[event.id].plt_req)))]
             if not alleles[event.id]:
                 raise ValueError("It looks like no one is available for event: {}".format(event.id))
             schedule.append(EventGene(event.id))

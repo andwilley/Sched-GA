@@ -3,7 +3,7 @@ import uuid
 from app.models.state import State
 from app.models.constraints.constraint import Constraint
 from app.models.event_gene import EventGene
-from app.constants.event_types import SIM, ODO
+from app.constants.event_types import SIM, ODO, CLS, LSO
 from app.constants.opnav import LATE_EVENT
 from app.ga.parameters import UNDESIRABLE_SHIFT_WEIGHT as WEIGHT
 
@@ -17,13 +17,13 @@ class UndesirableShifts(Constraint):
         self._state = state
         self._crew_tally: Dict[uuid.UUID, int] = {key: 0 for key in self._state.pilots}
         self._total = 0
-        self._undesirable_types = [SIM, ODO]
+        self._undesirable_types = [SIM, ODO, CLS, LSO]
 
     def each_event(self, gene: EventGene) -> None:
         """
         Called for each event in the individual.
         For each event, add the number of undesirable shifts to the pilots tally.
-        For now, we use night flights, sims and ODO.
+        For now, we use night flights, sims, classes, LSO and ODO.
         """
         if self._state.events[gene.event_id].desc in self._undesirable_types:
             self._crew_tally[gene.pilot_id] += 1

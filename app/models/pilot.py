@@ -5,11 +5,12 @@ from app.models.sniv import Sniv
 class Pilot():
 
     def __init__(self, callsign: str = '', quals: List[str] = None,
-                 snivs: List[uuid.UUID] = None) -> None:
+                 snivs: List[uuid.UUID] = None, plt: bool = True) -> None:
         self.id = uuid.uuid4()
         self.callsign = callsign
         self.quals = quals if quals else []
         self.snivs = snivs if snivs else []
+        self.plt = plt
 
     @property
     def id(self) -> uuid.UUID:
@@ -43,6 +44,14 @@ class Pilot():
     @snivs.setter
     def snivs(self, snivs: List[uuid.UUID]) -> None:
         self._snivs = snivs
+
+    @property
+    def plt(self) -> bool:
+        return self._plt
+
+    @plt.setter
+    def plt(self, plt: bool) -> None:
+        self._plt = plt
 
     def __repr__(self) -> str:
         return "pilotId {}".format(self.id.urn)
