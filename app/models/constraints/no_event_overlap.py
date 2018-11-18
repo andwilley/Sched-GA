@@ -44,3 +44,11 @@ class NoEventOverlap(Constraint):
         Return the fitness calculated with each_event().
         """
         return self._fitness * OVERLAP_WEIGHT
+
+    @property
+    def indiv_is_feasible(self) -> bool:
+        return True if self._fitness == 0.0 else False
+
+    @property
+    def is_hard_constraint(self) -> bool:
+        return True

@@ -32,6 +32,14 @@ class UndesirableShifts(Constraint):
             self._crew_tally[gene.pilot_id] += 1
             self._total += 1
 
+    @property
+    def indiv_is_feasible(self) -> bool:
+        return True
+
+    @property
+    def is_hard_constraint(self) -> bool:
+        return False
+
     def get_final_fitness(self) -> float:
         """
         Return the fitness calculated with each_event().

@@ -68,3 +68,11 @@ class CrewDay(Constraint):
 
         minutes_diff: float = (diff.total_seconds() / 60) - (crew_day * 60)
         return minutes_diff if minutes_diff > 0 else 0.0
+
+    @property
+    def indiv_is_feasible(self) -> bool:
+        return True if self._fitness == 0.0 else False
+
+    @property
+    def is_hard_constraint(self) -> bool:
+        return True

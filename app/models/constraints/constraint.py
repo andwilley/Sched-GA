@@ -20,6 +20,16 @@ class Constraint(abc.ABC):
     def __init__(self, state: State) -> None:
     """
 
+    @property
+    @abc.abstractmethod
+    def is_hard_constraint(self) -> bool:
+        pass
+
+    @property
+    @abc.abstractmethod
+    def indiv_is_feasible(self) -> bool:
+        pass
+
     @abc.abstractmethod
     def each_event(self, gene: EventGene) -> None:
         pass

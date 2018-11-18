@@ -16,6 +16,7 @@ class Individual():
         self.schedule = deepcopy(state.schedule)
         self.fitness = 0.0
         self.inverse_fitness = 0.0
+        self.is_feasible = True
         self._state = state
         if fill:
             for gene in self.schedule:
@@ -49,6 +50,13 @@ class Individual():
             fitness = 0
         self._inverse_fitness = fitness
 
+    @property
+    def is_feasible(self) -> bool:
+        return self._is_feasible
+
+    @is_feasible.setter
+    def is_feasible(self, feasible: bool) -> None:
+        self._is_feasible = feasible
 
     def assign_rand_pilot(self, gene: EventGene) -> None:
         """
@@ -102,4 +110,5 @@ class Individual():
                                    self._state.pilots[gene.pilot_id].callsign,
                                    self._state.events[gene.event_id].qual_req))
         schedule = "\n".join(schedule)
-        return "(Individual: schedule \n{}, fitness {})".format(schedule, self.fitness)
+        return "(Individual: schedule \n{}, fitness {}, {})".format(schedule, self.fitness,\
+            "feasible" if self.is_feasible else "INFEASIBLE")

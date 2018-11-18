@@ -62,3 +62,11 @@ class FairWorkHours(Constraint):
             work_day = self._crew_hours[pilot_id][1] if pilot_id in self._crew_hours else 0
             fitness += abs(work_day - avg_minutes)
         return fitness * FAIR_HOURS_WEIGHT
+
+    @property
+    def indiv_is_feasible(self) -> bool:
+        return True
+
+    @property
+    def is_hard_constraint(self) -> bool:
+        return False
