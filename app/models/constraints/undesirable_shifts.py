@@ -27,7 +27,8 @@ class UndesirableShifts(Constraint):
         """
         if self._state.events[gene.event_id].desc in self._undesirable_types:
             self._crew_tally[gene.pilot_id] += 1
-            self._total += 1
+            # ODO counts more
+            self._total += 1 if not self._state.events[gene.event_id].desc == ODO else 10
         if self._state.events[gene.event_id].end > LATE_EVENT:
             self._crew_tally[gene.pilot_id] += 1
             self._total += 1
