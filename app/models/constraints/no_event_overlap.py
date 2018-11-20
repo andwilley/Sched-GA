@@ -26,6 +26,8 @@ class NoEventOverlap(Constraint):
         save each event under a pilot id key
 
         Fitness is total minutes of overlap
+
+        This is a performance bottleneck! n^2 ish. each event, each plt (const), each schd event
         """
         if gene.pilot_id in self._pilot_events:
             for event_id in self._pilot_events[gene.pilot_id]:

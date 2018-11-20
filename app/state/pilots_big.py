@@ -15,7 +15,7 @@ _pilot_list = [
     Pilot("Junk", [TRANS, STK, FACA, CAS, IFR, FWT1, FWT2, FCF]),
     Pilot("Tummy", [TRANS, STK, LAT, CAS, IFR, FWT1, FCF, ODO, WEEN]),
     # 10
-    Pilot("BF", [TRANS, STK, FWT1, ODO, CQ, WEEN]),
+    Pilot("BF", [TRANS, STK, FWT1, CQ, WEEN]),
     Pilot("EITHA", [TRANS, STK, FWT1, NTPS, INST, ODO]),
     Pilot("Broke", [TRANS, ODO]),
     Pilot("Lumpy", [TRANS, STK, CAS, FWT1, FCF, NTPS, INST, ODO]),
@@ -24,7 +24,7 @@ _pilot_list = [
     Pilot("Squirrel", [TRANS, STK, CAS, IFR, FWT1, FCF, NTPS, INST, ODO, WEEN]),
     Pilot("Mongo", [TRANS, STK, FACA, CAS, FWT1, FWT2, BFM, FCF, ODO, WEEN]),
     Pilot("Busey", [TRANS, STK, CAS, FWT1, FCF, NTPS, INST, ODO, OCF, CQ, WEEN]),
-    Pilot("NAGAA", [TRANS, STK, LAT, FACA, CAS, FWT1, FCF, ODO]),
+    Pilot("NAGAA", [TRANS, STK, LAT, FACA, CAS, FWT1, FCF]),
     Pilot("Drub", [TRANS, STK, CAS, FWT1, FCF, NTPS, INST, ODO]),
     # 20
     Pilot("M&M", [TRANS, STK, CAS, FWT1, FWT2, BFM, FCF, NTPS, INST, ODO, WEEN]),
@@ -37,7 +37,7 @@ _pilot_list = [
     Pilot("2Face", [TRANS, STK, CAS, FWT1, ODO]),
     Pilot("Landfill", [TRANS, STK, CAS, FWT1, CQ, ODO, WEEN]),
     Pilot("Coots", [TRANS, STK, CAS, IFR, FWT1, FCF, ODO, WEEN]),
-    Pilot("Face", [TRANS, STK, CAS, FWT1, FWT2, BFM, ODO]),
+    Pilot("Face", [TRANS, STK, CAS, FWT1, FWT2, BFM]),
     # 30
     Pilot("BS", [TRANS, STK, LAT, CAS, FWT1, FWT2, BFM, FCF, ODO]),
     Pilot("Repo", [TRANS, STK, CAS, FWT1, FWT2, FCF, ODO, WEEN]),

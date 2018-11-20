@@ -1,4 +1,5 @@
 from bisect import insort
+from math import inf
 from typing import List, Set
 from app.models.state import State
 from app.models.individual import Individual
@@ -20,6 +21,7 @@ class Population():
         self.elite_size = int(elite_ratio * self.size)
         self.elites: List[Individual] = []
         self.max_fitness = 0.0
+        self.min_fitness = inf
         self._state = state
         self._x_ovr_pts = x_ovr_pts
         self._mut_prb = mut_prb
@@ -75,6 +77,14 @@ class Population():
             raise ValueError("Invalid population size.")
         self.population = pop1 + pop2
 
+    @property
+    def min_fitness(self) -> float:
+        return self._min_fitness
+
+    @min_fitness.setter
+    def min_fitness(self, fitness: float) -> None:
+        self._min_fitness = fitness
+
     def set_fitness(self) -> None:
         """
         Calculates and sets the fitness of each individual in the population.
@@ -104,6 +114,9 @@ class Population():
             # save the max to invert the fitness, for proportional selection
             if indiv.fitness > self.max_fitness:
                 self.max_fitness = indiv.fitness
+            # save the min for analysis
+            if indiv.fitness < self.min_fitness:
+                self.min_fitness = indiv.fitness
 
         # run through one more time to invert the fitness
         self._invert_fitness()
@@ -125,6 +138,13 @@ class Population():
 
         # add elites and set population
         self.population = self.elites + children
+
+    def get_feasible_count(self) -> int:
+        feasible_count = 0
+        for indiv in self.population:
+            if indiv.is_feasible:
+                feasible_count += 1
+        return feasible_count
 
     def __repr__(self) -> str:
         return "(Population: {})".format(self.population)

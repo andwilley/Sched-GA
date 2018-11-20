@@ -16,7 +16,7 @@ def main():
     state = State(pilots, events, snivs)
 
     # initialize the analysis
-    avg_fits = np.array([])
+    avg_fits = np.array([[], []])
 
     # initialize population and calculate initial fitness
     population = Population(size=POP_SIZE, elite_ratio=ELITE_RATIO, diverse_elite=DIVERSE_ELITE,
@@ -24,17 +24,20 @@ def main():
     population.set_fitness()
 
     # go through each generation
-    for _ in range(MAX_GEN):
+    for gen in range(MAX_GEN):
         # select parents
         population.make_next_generation()
         # calc fitness
         population.set_fitness()
         # save each generation's average fitness
         tot_fit = sum([indiv.fitness for indiv in population.population])
-        avg_fits = np.append(avg_fits, tot_fit / population.size)
+        avg_fits = np.append(avg_fits, [[tot_fit / population.size], [population.min_fitness]],
+                             axis=1)
         print(".", end='', flush=True)
     print("")
 
     plot_avg_fit(avg_fits)
-    print("all elites:", population.elites[:10])
-    print("avg hamming dist:", pop_avg_hamming_dist(population.population))
+    print("all elites:", sorted(population.population)[:10])
+    feasible = population.get_feasible_count()
+    print("Feasible solutions: ", feasible, "{}%".format((feasible / population.size) * 100))
+    # print("avg hamming dist:", pop_avg_hamming_dist(population.population))

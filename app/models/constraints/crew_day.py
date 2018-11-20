@@ -57,7 +57,7 @@ class CrewDay(Constraint):
         """
         Return the fitness calculated with each_event().
         """
-        return self._fitness * CREWDAY_WEIGHT
+        return self._fitness * self._fitness * CREWDAY_WEIGHT
 
     @staticmethod
     def minutes_over_crew_day(start: datetime, end: datetime) -> float:
