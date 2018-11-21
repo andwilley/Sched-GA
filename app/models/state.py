@@ -1,4 +1,5 @@
 import uuid
+from math import inf
 from typing import Dict, List, Tuple
 from app.models.pilot import Pilot
 from app.models.event import Event
@@ -74,3 +75,14 @@ class State():
                 raise ValueError("It looks like no one is available for event: {}".format(event.id))
             schedule.append(EventGene(event.id))
         return schedule, alleles
+
+    def normalize_odo(self) -> None:
+        max_days = 0.0
+        min_days = inf
+        for _, pilot in self.pilots.items():
+            if pilot.last_odo < min_days:
+                min_days = pilot.last_odo
+            if pilot.last_odo > max_days:
+                max_days = pilot.last_odo
+        for _, pilot in self.pilots.items():
+            pilot.last_odo_norm = (pilot.last_odo - min_days) / (max_days - min_days)
