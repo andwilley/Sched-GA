@@ -13,8 +13,9 @@ class State():
         self.pilots = pilots
         self.events = events
         self.snivs = snivs if snivs else {}
-        self.add_snivs_to_pilots()
+        self.add_snivs_to_pilots() # this mutates self.pilots
         self.schedule, self.alleles = self._build_sched_and_alleles()
+        self._normalize_odo() # this mutates self.pilots
 
     @property
     def pilots(self) -> Dict[uuid.UUID, Pilot]:
@@ -76,9 +77,10 @@ class State():
             schedule.append(EventGene(event.id))
         return schedule, alleles
 
-    def normalize_odo(self) -> None:
-        max_days = 0.0
-        min_days = inf
+    def _normalize_odo(self) -> None:
+        # mutates pilot
+        max_days = 0
+        min_days = 9999999
         for _, pilot in self.pilots.items():
             if pilot.last_odo < min_days:
                 min_days = pilot.last_odo

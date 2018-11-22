@@ -11,6 +11,7 @@ from app.models.constraints.no_event_overlap import NoEventOverlap
 from app.models.constraints.crew_day import CrewDay
 from app.models.constraints.fair_work_hours import FairWorkHours
 from app.models.constraints.undesirable_shifts import UndesirableShifts
+from app.models.constraints.last_odo import LastODO
 from app.models.constraints.constraint import Constraint
 from app.ga.fitness import calc_fitness
 
@@ -35,13 +36,15 @@ class FindWeightsCase(unittest.TestCase):
 
     def test_find_weights(self):
         state = State(pilots, events)
-        pop = Population(400, .1, True, 1, .01, state)
+        pop = Population(1000, .1, True, 1, .01, state)
         crew_day = self.get_avg_constraint_fitness(pop, CrewDay(state))
-        overlap = self.get_avg_constraint_fitness(pop, NoEventOverlap(state))
+        # overlap = self.get_avg_constraint_fitness(pop, NoEventOverlap(state))
         fair_hours = self.get_avg_constraint_fitness(pop, FairWorkHours(state))
         undesirable = self.get_avg_constraint_fitness(pop, UndesirableShifts(state))
+        odo = self.get_avg_constraint_fitness(pop, LastODO(state))
 
         print("crewday: ", crew_day)
-        print("overlap: ", overlap)
+        # print("overlap: ", overlap)
         print("fair_hours: ", fair_hours)
         print("undesirable: ", undesirable)
+        print("odo: ", odo)

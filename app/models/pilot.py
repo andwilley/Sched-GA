@@ -1,18 +1,17 @@
 import uuid
-from math import inf
 from typing import List
 
 class Pilot():
 
     def __init__(self, callsign: str = '', quals: List[str] = None,
                  snivs: List[uuid.UUID] = None, plt: bool = True,
-                 last_odo: float = inf) -> None:
+                 last_odo: int = 0) -> None:
         self.id = uuid.uuid4()
         self.callsign = callsign
         self.quals = quals if quals else []
         self.snivs = snivs if snivs else []
         self.last_odo = last_odo
-        self.last_odo_norm = 1
+        self.last_odo_norm = 0
         self.plt = plt
 
     @property
@@ -57,11 +56,11 @@ class Pilot():
         self._plt = plt
 
     @property
-    def last_odo(self) -> float:
+    def last_odo(self) -> int:
         return self._last_odo
 
     @last_odo.setter
-    def last_odo(self, last_odo) -> None:
+    def last_odo(self, last_odo: int) -> None:
         self._last_odo = last_odo
 
     @property
