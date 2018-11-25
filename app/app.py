@@ -2,7 +2,7 @@ import numpy as np
 from app.models.state import State
 from app.models.population import Population
 from app.ga.parameters import MAX_GEN, POP_SIZE, ELITE_RATIO, MUT_PROB, X_OVER_PTS, DIVERSE_ELITE
-from app.state.events_big import events
+from app.state.events3 import events
 from app.state.pilots_big import pilots
 from app.state.snivs_big import snivs
 from app.analysis.plot_avg_fit import plot_avg_fit
