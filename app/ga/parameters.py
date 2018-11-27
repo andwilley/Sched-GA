@@ -3,7 +3,7 @@ The GA parameters
 """
 
 # General ga params
-MAX_GEN = 150
+MAX_GEN = 15
 POP_SIZE = 400
 
 # Operator params

@@ -1,17 +1,20 @@
 from datetime import datetime
-from typing import Dict
+from typing import Dict, List, NamedTuple
+from collections import namedtuple
 import uuid
 import numpy as np
 from app.models.state import State
 from app.models.event import Event
 from app.models.population import Population
+from app.models.individual import Individual
 from app.ga.parameters import MAX_GEN, POP_SIZE, ELITE_RATIO, MUT_PROB, X_OVER_PTS, DIVERSE_ELITE
 from app.state.pilots_big import pilots
 from app.state.snivs_big import snivs
 from app.analysis.plot_avg_fit import plot_avg_fit
 from app.analysis.diversity import pop_avg_hamming_dist
 
-def main(events: Dict[uuid.UUID, Event], print_results: bool = False):
+def main(events: Dict[uuid.UUID, Event], print_results: bool = False, plot_results: bool = False,
+         plot_file: str = '', print_hamming: bool = False):
     # main program
     # Runs the EA that fills pilots into events in a schedule based on constraints.
 
@@ -40,12 +43,25 @@ def main(events: Dict[uuid.UUID, Event], print_results: bool = False):
         print(".", end='', flush=True)
     print("")
 
-    end_time = datetime.now()
-
-    plot_avg_fit(avg_fits)
+    run_time = (start_time - datetime.now()).total_seconds()
     feasible = population.get_feasible_count()
+
+    if plot_results:
+        plot_file = 'test' if not plot_file else plot_file
+        plot_avg_fit(avg_fits, plot_file)
     if print_results:
         print("10 Best:", sorted(population.population)[:10])
         print("Feasible solutions: ", feasible, "{}%".format((feasible / population.size) * 100))
-        print("Run Time (s):", (end_time - start_time).total_seconds())
-        # print("avg hamming dist:", pop_avg_hamming_dist(population.population))
+        print("Run Time (s):", run_time)
+        if print_hamming:
+            print("avg hamming dist:", pop_avg_hamming_dist(population.population))
+
+    return Results(population=population.population, avg_fits=avg_fits, num_feasible=feasible,
+                   percent_feasible=(feasible / population.size) * 100, run_time=run_time)
+
+class Results(NamedTuple):
+    population: List[Individual]
+    avg_fits: List[List[float]]
+    num_feasible: int
+    percent_feasible: float
+    run_time: float
