@@ -32,7 +32,8 @@ venv
 venv_bk
 *.pyc
 build
-/tmp/
+/tmp/*
+!/tmp/.gitkeep
 
 #Others
 .mypy_cache/
