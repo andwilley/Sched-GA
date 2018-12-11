@@ -7,7 +7,7 @@ from app.state.events4 import events as event4
 from app.state.events5 import events as event5
 from app.analysis.plot_avg_fit import plot_avg_fit
 
-RUNS_EACH = 2
+RUNS_EACH = 20
 events_list = [event1, event2, event3, event4, event5]
 results: List[List[Results]] = [[], [], [], [], []]
 

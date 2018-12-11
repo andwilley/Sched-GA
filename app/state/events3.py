@@ -5,7 +5,7 @@ import app.constants.quals as qls
 from app.constants.event_types import FLIGHT, SIM, ODO, CLS, LSO
 
 _event_list: List[Event] = [
-    # based on 26 oct 18
+    # 38 events
 
     Event(datetime(2019, 1, 1, 6, 30), datetime(2019, 1, 1, 10, 0), ODO, qls.ODO, False),
     Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), ODO, qls.ODO, False),

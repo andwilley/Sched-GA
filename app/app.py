@@ -43,7 +43,7 @@ def main(events: Dict[uuid.UUID, Event], print_results: bool = False, plot_resul
         print(".", end='', flush=True)
     print("")
 
-    run_time = (start_time - datetime.now()).total_seconds()
+    run_time = (datetime.now() - start_time).total_seconds()
     feasible = population.get_feasible_count()
 
     if plot_results:

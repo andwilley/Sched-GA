@@ -2,6 +2,7 @@ from datetime import datetime
 from app.models.sniv import Sniv
 from app.state.pilots_big import _pilot_list
 
+# 9 snivs (1 unavail, 4 half day)
 _sniv_list = [
     Sniv(datetime(2019, 1, 1, 8, 0), datetime(2019, 1, 1, 12, 0), _pilot_list[0].id, 'dental'),
     Sniv(datetime(2019, 1, 1, 19, 0), datetime(2019, 1, 1, 23, 0), _pilot_list[4].id, 'school'),

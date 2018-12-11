@@ -2,7 +2,7 @@ from app.models.pilot import Pilot
 from app.constants.quals import *
 
 _pilot_list = [
-    # Pilots
+    # Pilots (38)
     Pilot("Foz", [TRANS, STK, FWT1, BFM, FCF]),
     Pilot("Kin", [TRANS, STK, CAS, FWT1, FCF]),
     Pilot("Metro", [TRANS, STK, CAS, NS, IFR, FWT1, FWT2, BFM, FCF, NTPS, INST, WEEN]),

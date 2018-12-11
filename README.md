@@ -1,0 +1,3 @@
+# Military Flight Scheduling EA
+## Installation:
+Heres how to install...
