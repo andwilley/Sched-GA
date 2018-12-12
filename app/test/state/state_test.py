@@ -4,13 +4,13 @@ from datetime import datetime
 from app.models.pilot import Pilot
 from app.models.sniv import Sniv
 from app.models.event import Event
-from app.constants.quals import STK, A2A, CQ
+from app.constants.quals import STK, FWT1, CQ
 
 event1 = Event(datetime(2019, 1, 1, 7, 0), datetime(2019, 1, 1, 9, 0), "flight", STK)
 event2 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 11, 0), "flight", STK)
-event3 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight", A2A)
+event3 = Event(datetime(2019, 1, 1, 14, 0), datetime(2019, 1, 1, 15, 0), "flight", FWT1)
 event4 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight", CQ)
-event5 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight", A2A)
+event5 = Event(datetime(2019, 1, 1, 21, 0), datetime(2019, 1, 1, 22, 0), "flight", FWT1)
 
 events1: Dict[uuid.UUID, Event] = {
     event1.id: event1,
@@ -28,8 +28,8 @@ events2: Dict[uuid.UUID, Event] = {
 
 
 pilot1 = Pilot("Steam", [STK])
-pilot2 = Pilot("Virgil", [A2A])
-pilot3 = Pilot("Dump", [STK, A2A])
+pilot2 = Pilot("Virgil", [FWT1])
+pilot3 = Pilot("Dump", [STK, FWT1])
 pilot7 = Pilot("Space", [CQ])
 pilot8 = Pilot("Tummy", [CQ])
 

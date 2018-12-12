@@ -1,3 +1,7 @@
+"""
+The Individual Model.
+"""
+
 from typing import List
 from copy import deepcopy
 import random as rnd
@@ -7,12 +11,21 @@ from app.models.state import State
 class Individual():
     """
     Individual represents a single chromosome
-
-    Attributes:
-        schedule: an array of event and pilot ids
-        fitness: the penalty score of this individual
     """
+
     def __init__(self, state: State, fill: bool = True) -> None:
+        """
+        Creates the individual
+
+        Args:
+            state: application state object
+            fill: True will pick pilots at random for each event. False leaves that field set,
+                intended to for use when creating a crossedover child.
+
+        Returns:
+            None
+        """
+
         self.schedule = deepcopy(state.schedule)
         self.fitness = 0.0
         self.inverse_fitness = 0.0
@@ -61,19 +74,40 @@ class Individual():
     def assign_rand_pilot(self, gene: EventGene) -> None:
         """
         Assign random pilot to the passed gene from the event allele.
+
+        Args:
+            gene: the event gene to assign a random pilot to
+
+        Returns:
+            None (mutates the gene instance)
         """
+
         allele_last_index = len(self._state.alleles[gene.event_id]) - 1
         gene.pilot_id = self._state.alleles[gene.event_id][rnd.randint(0, allele_last_index)]
 
     def spawn(self, new_sched: List[EventGene]) -> 'Individual':
         """
         Create a new individual from a modified schedule (xover or mutation done externally)
+
+        Args:
+            new_sched: the new event list to assign to this Individual, should come from a
+                crossover or mutation. Must match the event order of the schedule in State.
+
+        Returns:
+            A new Individual.
         """
         indiv = Individual(self._state, fill=False)
         indiv.schedule = new_sched
         return indiv
 
     def crew_string(self) -> str:
+        """
+        Creates a string to represent each pilot in order of events in this schedule.
+
+        Returns:
+            a string of 32 char hex IDs for each pilot in every event.
+        """
+
         cstr = ''
         for gene in self.schedule:
             cstr += gene.pilot_id.hex

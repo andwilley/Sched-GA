@@ -1,18 +1,34 @@
+"""
+No event overlap Constraint
+"""
+
 from typing import Dict, List
 import uuid
 from datetime import timedelta
-from app.ga.parameters import OVERLAP_WEIGHT
 from app.models.constraints.constraint import Constraint
 from app.models.event_gene import EventGene
 from app.models.state import State
+# should be passed as a parameter:
+from app.ga.parameters import OVERLAP_WEIGHT
 
 class NoEventOverlap(Constraint):
     """
     No event overlap constraint. Limits pilots to one event at a time.
-    Applies penalty (fitness) each time violated.
+    Applies penalty (fitness) each time violated. Penalty is minutes of overlap for each event that
+    overlaps.
     """
 
     def __init__(self, state: State):
+        """
+        Create the constraint.
+
+        Args:
+            state: the application state
+
+        Returns:
+            None
+        """
+
         self._fitness = 0.0
         self._state = state
         self._pilot_events: Dict[uuid.UUID, List[uuid.UUID]] = {}
@@ -25,9 +41,15 @@ class NoEventOverlap(Constraint):
         it should be linear time through each event for that pilot for each new event
         save each event under a pilot id key
 
-        Fitness is total minutes of overlap
+        Fitness is total minutes of overlap.
 
         This is a performance bottleneck! n^2 ish. each event, each plt (const), each schd event
+
+        Args:
+            gene: EventGene to evaluate
+
+        Returns:
+            None
         """
         if gene.pilot_id in self._pilot_events:
             for event_id in self._pilot_events[gene.pilot_id]:
@@ -43,7 +65,8 @@ class NoEventOverlap(Constraint):
 
     def get_final_fitness(self) -> float:
         """
-        Return the fitness calculated with each_event().
+        Returns:
+            The fitness calculated with each_event().
         """
         return self._fitness * OVERLAP_WEIGHT
 

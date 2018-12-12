@@ -1,9 +1,14 @@
+"""
+Crew day Constraint
+"""
+
 from datetime import datetime, timedelta
 from typing import Dict
 import uuid
 from app.models.constraints.constraint import Constraint
 from app.models.event_gene import EventGene
 from app.models.state import State
+# these should be passed as a parameters:
 from app.constants.opnav import DAY_CREW_DAY, NIGHT_CREW_DAY
 from app.constants.environment import SUNSET
 from app.ga.parameters import CREWDAY_WEIGHT
@@ -15,6 +20,16 @@ class CrewDay(Constraint):
     """
 
     def __init__(self, state: State):
+        """
+        Create the constraint.
+
+        Args:
+            state: the application state
+
+        Returns:
+            None
+        """
+
         self._fitness = 0.0
         self._crew_hours: Dict[uuid.UUID, Dict[str, datetime]] = {}
         self._state = state
@@ -25,7 +40,14 @@ class CrewDay(Constraint):
         Track the earliest start and latest end, as well as the penalty (fitness).
         For each event, update the fitness with the overall change to the overage
         for that pilot's schedule, if any.
+
+        Args:
+            gene: the EventGene to evaluate
+
+        Returns:
+            None
         """
+
         # for the pilot, save the earliest and latest times.
         event_start = self._state.events[gene.event_id].start
         event_end = self._state.events[gene.event_id].end
@@ -55,15 +77,27 @@ class CrewDay(Constraint):
 
     def get_final_fitness(self) -> float:
         """
-        Return the fitness calculated with each_event().
+        Returns:
+            The fitness calculated with all each_event() calls.
         """
         return self._fitness * self._fitness * CREWDAY_WEIGHT
 
     @staticmethod
     def minutes_over_crew_day(start: datetime, end: datetime) -> float:
+        """
+        Calculate to number of minutes over crew day given a start and end.
+        Assumes only flight events end after sunset.
+
+        Args:
+            start: the start date and time
+            end: the end date and time
+
+        Returns:
+            The number of minutes over crew day or 0.0.
+        """
+
         diff: timedelta = end - start
 
-        # assumes only flight events end after sunset
         crew_day = DAY_CREW_DAY if end < SUNSET else NIGHT_CREW_DAY
 
         minutes_diff: float = (diff.total_seconds() / 60) - (crew_day * 60)

@@ -1,7 +1,21 @@
+"""
+Functions for plotting fitness.
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_avg_fit(averages, plot_file):
+    """
+    Plots average and best fitness values for each generation.
+    Args:
+        averages (Numpy.array[[average][best]]): a 2D array of the average and best fitness values
+            for each generation.
+        plot_file (str): the name to save the plot file as.
+
+    Returns:
+        None
+    """
     title = 'Average Fitness For Each Successive Generation'
     x_axis = np.arange(0.0, len(averages[0]), 1.0)
     y_axis1 = averages[0, :]

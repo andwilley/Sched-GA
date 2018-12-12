@@ -1,9 +1,14 @@
+"""
+Fair work hours Constraint.
+"""
+
 from datetime import datetime
 from typing import Dict, Tuple
 import uuid
 from app.models.state import State
 from app.models.constraints.constraint import Constraint
 from app.models.event_gene import EventGene
+# this should be passed as a parameter:
 from app.ga.parameters import FAIR_HOURS_WEIGHT
 
 class FairWorkHours(Constraint):
@@ -13,6 +18,16 @@ class FairWorkHours(Constraint):
     """
 
     def __init__(self, state: State):
+        """
+        Create the constraint.
+
+        Args:
+            state: the application state
+
+        Returns:
+            None
+        """
+
         self._crew_hours: Dict[uuid.UUID, Tuple[Dict[str, datetime], float]] = {}
         self._total_minutes = 0.0
         self._state = state
@@ -20,10 +35,17 @@ class FairWorkHours(Constraint):
     def each_event(self, gene: EventGene) -> None:
         """
         Called for each event in the individual.
-        Track the earliest start and latest end.
+        Track the earliest start and latest end for each pilot.
         For each event, update the fitness with the overall change to the overage
         for that pilot's schedule, if any.
+
+        Args:
+            gene: EventGene to evaluate
+
+        Returns:
+            None
         """
+
         # for the pilot, save the earliest and latest times.
         event_start = self._state.events[gene.event_id].start
         event_end = self._state.events[gene.event_id].end
@@ -53,10 +75,9 @@ class FairWorkHours(Constraint):
 
     def get_final_fitness(self) -> float:
         """
-        Return the fitness calculated with each_event().
+        Return the fitness calculated with all each_event() calls.
         """
         fitness = 0.0
-        # also penalizes unscheduled aircrew, this may conflict with sniv constraint fitness
         avg_minutes = self._total_minutes / len(self._state.pilots)
         for pilot_id in self._state.pilots:
             work_day = self._crew_hours[pilot_id][1] if pilot_id in self._crew_hours else 0

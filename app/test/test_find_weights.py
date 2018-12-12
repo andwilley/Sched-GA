@@ -3,11 +3,10 @@ from typing import Tuple
 from datetime import datetime
 import math
 import numpy as np
-from app.state.events_big import events
+from app.state.events1 import events
 from app.state.pilots_big import pilots
 from app.models.state import State
 from app.models.population import Population
-from app.models.constraints.no_event_overlap import NoEventOverlap
 from app.models.constraints.crew_day import CrewDay
 from app.models.constraints.fair_work_hours import FairWorkHours
 from app.models.constraints.undesirable_shifts import UndesirableShifts

@@ -1,9 +1,26 @@
+"""
+Sniv Model.
+"""
+
 import uuid
 from datetime import datetime
 
 class Sniv:
+    """
+    Represents a single schedule request, or "sniv".
+    """
 
     def __init__(self, start: datetime, end: datetime, pilot_id: uuid.UUID, desc: str = ''):
+        """
+        Creates a Sniv.
+
+        Args:
+            start: the start time and date
+            end: the end time and date
+            pilot_id: the ID of the pilot this sniv is associated with
+            desc: a brief plain-language description of this sniv
+        """
+
         self.id = uuid.uuid4()
         self.start = start
         self.end = end

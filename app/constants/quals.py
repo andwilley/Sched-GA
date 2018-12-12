@@ -1,3 +1,7 @@
+"""
+Pilot qualification constants.
+"""
+
 ODO = "odo"
 TRANS = "trans"
 LAT = "lat"

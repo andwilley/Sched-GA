@@ -1,13 +1,34 @@
+"""
+EventGene class definition.
+"""
+
 import uuid
 
 class EventGene():
+    """
+    Map an event ID to a pilot ID.
+    """
 
     def __init__(self, event_id: uuid.UUID) -> None:
+        """
+        Create the EventGene
+
+        Args:
+            event_id: the ID of the event associated with this gene.
+
+        Returns:
+            None
+        """
+
         self.event_id = event_id
         self.pilot_id = None
 
     @property
     def event_id(self) -> uuid.UUID:
+        """
+        The event ID of the event associated with this gene.
+        """
+
         return self._event_id
 
     @event_id.setter
@@ -16,6 +37,10 @@ class EventGene():
 
     @property
     def pilot_id(self) -> uuid.UUID:
+        """
+        The pilot ID of the event associated with this gene.
+        """
+
         return self._pilot_id
 
     @pilot_id.setter
@@ -23,6 +48,13 @@ class EventGene():
         self._pilot_id = pilot_id
 
     def copy(self) -> 'EventGene':
+        """
+        Create a copy of the gene.
+
+        Returns:
+            A new EventGene object with fields set to the same IDs.
+        """
+
         gene = EventGene(self.event_id)
         gene.pilot_id = self.pilot_id
         return gene

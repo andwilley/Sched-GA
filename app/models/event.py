@@ -1,10 +1,31 @@
+"""
+Event model.
+"""
+
 import uuid
 from datetime import datetime
 
 class Event():
+    """
+    Saves the details for a single event in the schedule.
+    """
 
     def __init__(self, start: datetime, end: datetime, desc: str, qual_req: str,
                  plt_req: bool = True) -> None:
+        """
+        Create the Event
+
+        Args:
+            start: start time
+            end: end time
+            desc: event type
+            qual_req: qualification required of pilot for this event
+            plt_req: False if a WSO can fill this event
+
+        Returns:
+            None
+        """
+
         self.id = uuid.uuid4()
         self.start = start
         self.end = end

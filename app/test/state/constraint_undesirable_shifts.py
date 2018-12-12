@@ -7,15 +7,14 @@ from app.models.event_gene import EventGene
 from app.constants.quals import TRANS
 from app.constants.event_types import FLIGHT, SIM, ODO
 
-# avg = 3 hours, 2 hours penalty for 1 and 3
-event1 = Event(datetime(2019, 1, 1, 6, 0), datetime(2019, 1, 1, 7, 0), FLIGHT, TRANS)
-event2 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), ODO, TRANS)
-event3 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 15, 0), SIM, TRANS)
+# avg = (0 + 2(ODO MULT) + 2) / 3 == 4 shifts, total difference is  events
+event1 = Event(datetime(2019, 1, 1, 6, 0), datetime(2019, 1, 1, 7, 0), FLIGHT, TRANS) # p1
+event2 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), ODO, TRANS) # p2
+event3 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 15, 0), SIM, TRANS) # p3
 
-# avg = 3 hours, no penalties
-event4 = Event(datetime(2019, 1, 1, 6, 0), datetime(2019, 1, 1, 9, 0), FLIGHT, TRANS)
-event5 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), FLIGHT, TRANS)
-event6 = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), FLIGHT, TRANS)
+event4 = Event(datetime(2019, 1, 1, 6, 0), datetime(2019, 1, 1, 9, 0), FLIGHT, TRANS) # p1
+event5 = Event(datetime(2019, 1, 1, 10, 0), datetime(2019, 1, 1, 13, 0), ODO, TRANS) # p2
+event6 = Event(datetime(2019, 1, 1, 18, 0), datetime(2019, 1, 1, 19, 0), FLIGHT, TRANS) # p3
 
 events: Dict[uuid.UUID, Event] = {
     event1.id: event1,

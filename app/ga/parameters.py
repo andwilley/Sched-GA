@@ -18,3 +18,6 @@ OVERLAP_WEIGHT = 100            # 100
 FAIR_HOURS_WEIGHT = 1           # 1
 UNDESIRABLE_SHIFT_WEIGHT = 200  # 200
 LAST_ODO_WEIGHT = 1200          # 1200
+
+# ODO specific event penalty
+ODO_MULTIPLIER = 5

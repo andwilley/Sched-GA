@@ -19,7 +19,7 @@ class ConstraintFairWorkHoursCase(unittest.TestCase):
         for gene in indiv1:
             odo_constraint.each_event(gene)
 
-        self.assertEqual(odo_constraint.get_final_fitness(), 2.5 * LAST_ODO_WEIGHT,
+        self.assertEqual(odo_constraint.get_final_fitness(), 1 * LAST_ODO_WEIGHT,
                          "Fitness should be 2.5.")
 
     def test_each_event_right_odo(self):
@@ -30,5 +30,5 @@ class ConstraintFairWorkHoursCase(unittest.TestCase):
         for gene in indiv2:
             odo_constraint.each_event(gene)
 
-        self.assertEqual(odo_constraint.get_final_fitness(), 0.5 * LAST_ODO_WEIGHT,
-                         "Fitness should be .5.")
+        self.assertEqual(odo_constraint.get_final_fitness(), 0 * LAST_ODO_WEIGHT,
+                         "Fitness should be 0.")

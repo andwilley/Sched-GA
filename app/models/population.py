@@ -7,25 +7,39 @@ from app.ga.fitness import calc_fitness, get_constraints
 from app.ga.operators import roulette_selection, create_and_mutate_offspring
 
 class Population():
+    """
+    Manages a list of solutions, responsible for managing the fitness calculation of each
+    Individual and the selection and reproduction of Individuals to create future generations.
+    """
 
     def __init__(self, size: int, elite_ratio: float, diverse_elite: bool, x_ovr_pts: int,
                  mut_prb: float, state: State):
         """
         Creates a list of random individuals as the population
+
+        Args:
+            size: the size of the population
+            elite_ratio: fraction of population to push to next gen w/o mutation
+            diverse_elite: enforce uniquness in elites list
+            x_ovr_pts: number of crossover points
+            mut_prob: probability of mutation for each gene of a child
+            state: the application state object
         """
+
         if not 0 <= elite_ratio <= 1 or not 0 <= mut_prb <= 1 or x_ovr_pts < 0 or size < 1:
             raise ValueError("One or more arguments for Population is outside the allowed range.")
 
         self.size = size
+        # create population by creating randomly selected pilot IDs for each event in Individual
         self.population = [Individual(state=state) for i in range(self.size)]
         self.elite_size = int(elite_ratio * self.size)
         self.elites: List[Individual] = []
-        self.max_fitness = 0.0
-        self.min_fitness = inf
+        self.max_fitness = 0.0 # for proportional selection
+        self.min_fitness = inf # for tracking the best solution fitness
         self._state = state
         self._x_ovr_pts = x_ovr_pts
         self._mut_prb = mut_prb
-        self._elite_set: Set[str] = set()
+        self._elite_set: Set[str] = set() # to enforce uniqueness in elites
         self._diverse_elite = diverse_elite
 
     @property
@@ -122,12 +136,17 @@ class Population():
         self._invert_fitness()
 
     def _invert_fitness(self) -> None:
+        """
+        Saves an inverted fitness in each individual for use with proportional selection.
+        Mutates the Individual object.
+        """
+
         for indiv in self.population:
             indiv.inverse_fitness = self.max_fitness - indiv.fitness
 
     def make_next_generation(self) -> None:
         """
-        Replaces the population with the next generation using GA operators
+        Replaces the population with the next generation using GA operators.
         """
         # select parents
         parents = roulette_selection(self.population, self.size - self.elite_size)
@@ -140,6 +159,11 @@ class Population():
         self.population = self.elites + children
 
     def get_feasible_count(self) -> int:
+        """
+        Returns:
+            The number of feasible solutions in this population.
+        """
+
         feasible_count = 0
         for indiv in self.population:
             if indiv.is_feasible:

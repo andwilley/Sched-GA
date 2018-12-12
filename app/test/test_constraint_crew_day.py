@@ -19,5 +19,5 @@ class ConstraintCrewDayCase(unittest.TestCase):
         for gene in indiv_crewday:
             crew_day_constraint.each_event(gene)
 
-        self.assertEqual(crew_day_constraint.get_final_fitness(), 60 * 3 * CREWDAY_WEIGHT,
+        self.assertEqual(crew_day_constraint.get_final_fitness(), 60 * 3 * 60 * 3 * CREWDAY_WEIGHT,
                          "Fitness should be 3 hours.")

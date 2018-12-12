@@ -1,3 +1,7 @@
+"""
+Crew Day test state (x)
+"""
+
 import uuid
 from typing import Dict
 from datetime import datetime
@@ -5,10 +9,6 @@ from app.models.event import Event
 from app.models.pilot import Pilot
 from app.models.event_gene import EventGene
 from app.constants.quals import TRANS
-
-"""
-Crew Day test state (x)
-"""
 
 # violates day crew day by 1 hour
 event1 = Event(datetime(2019, 1, 1, 6, 0), datetime(2019, 1, 1, 7, 0), "flight", TRANS)

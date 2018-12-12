@@ -3,6 +3,7 @@ from app.test.state.constraint_undesirable_shifts import indiv1, pilots, events
 from app.models.constraints.undesirable_shifts import UndesirableShifts
 from app.models.state import State
 from app.ga.parameters import UNDESIRABLE_SHIFT_WEIGHT as WEIGHT
+from app.ga.parameters import ODO_MULTIPLIER
 
 class ConstraintUndesirableShiftsCase(unittest.TestCase):
     def test_initialize(self):
@@ -18,5 +19,8 @@ class ConstraintUndesirableShiftsCase(unittest.TestCase):
         for gene in indiv1:
             undesirable_constraint.each_event(gene)
 
-        self.assertEqual(undesirable_constraint.get_final_fitness(), 2.0 * WEIGHT,
-                         "Fitness should be 2 events.")
+        # pilots have 0, 2 * ODO MULT, and 2 undesirable events in the test set
+        avg = (0 + 2 * ODO_MULTIPLIER + 2) / 3
+        total = abs(0 - avg) + abs(2 * ODO_MULTIPLIER - avg) + abs(2 - avg)
+        self.assertEqual(undesirable_constraint.get_final_fitness(), total * WEIGHT,
+                         "Fitness should be 12 events.")

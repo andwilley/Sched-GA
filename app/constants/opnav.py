@@ -1,5 +1,5 @@
 """
-OpNav Limitation Constants
+OpNav Limitation Constants.
 """
 
 from datetime import datetime

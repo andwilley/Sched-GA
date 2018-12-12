@@ -1,11 +1,32 @@
+"""
+The Pilot Model
+"""
+
 import uuid
 from typing import List
 
 class Pilot():
+    """
+    Represents a single pilot and the data associated.
+    """
 
     def __init__(self, callsign: str = '', quals: List[str] = None,
                  snivs: List[uuid.UUID] = None, plt: bool = True,
                  last_odo: int = 0) -> None:
+        """
+        Creates a Pilot
+
+        Args:
+            callsign: pilot's callsign
+            quals: list of pilot's quals using standard sting constants
+            snivs: list of pilot's snivs
+            plt: True if this is a pilot, False if a WSO
+            last_odo: days since last ODO this pilot stood
+
+        Returns:
+            None
+        """
+
         self.id = uuid.uuid4()
         self.callsign = callsign
         self.quals = quals if quals else []
@@ -37,7 +58,6 @@ class Pilot():
     @quals.setter
     def quals(self, quals: List[str]) -> None:
         self._quals = quals
-
 
     @property
     def snivs(self) -> List[uuid.UUID]:
