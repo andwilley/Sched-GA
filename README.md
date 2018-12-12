@@ -1,4 +1,9 @@
 # Military Flight Scheduling EA
+## Description
+An evolutionary algorithm for solving the combinatory optimization scheduling problem of military flight schedules.
+
+Note: Simulated flight data is used for releasability.
+
 ## Installation:
 1. Ensure Python 3.6 is installed.
 2. Clone the repository.
