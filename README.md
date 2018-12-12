@@ -1,6 +1,6 @@
-# Military Flight Scheduling EA
+# Flight Scheduling EA
 ## Description
-An evolutionary algorithm for solving the combinatory optimization scheduling problem of military flight schedules.
+An evolutionary algorithm for solving the combinatory optimization scheduling problem of writing daily flight schedules.
 
 Note: Simulated flight data is used for releasability.
 
