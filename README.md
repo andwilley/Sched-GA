@@ -1,7 +1,8 @@
 # Military Flight Scheduling EA
 ## Installation:
-1. Ensure Python 3.6 is installed on the system.
-2. In the console:
+1. Ensure Python 3.6 is installed.
+2. Clone the repository.
+3. In the console, inside the top level project directory:
 ```
 python3.6 -m venv venv
 source venv/bin/activate
@@ -9,6 +10,8 @@ pip install -r requirements.txt
 ```
 
 ## Run the Program
+Consider expanding your terminal horizonally, the results table is often wider than the default terminal width.
+
 From the top project directory, in the console:
 ```
 python run.py
@@ -20,7 +23,7 @@ python run.py
 -from app.state.events1 import events
 +from app.state.events3 import events
 ```
-- To change any of the parameters, just edit the values in `./app/ga/parameters.py`. Values chosen for the GA are in comments beside the values.
+- To change any of the parameters, just edit the values in `./app/ga/parameters.py`. Values chosen for the GA are in comments beside the values for reference if changed..
 - To see the hamming distance at the conclusion of the run, add the following parameter to the call to `main()` in `run.py` (This is time consuming).
 ```python
 print_hamming=True
@@ -28,7 +31,7 @@ print_hamming=True
 - To view the plotted results, navigate to `./tmp`. Images of the figures will be saved there.
 
 ## Directory Structure
-- App
+- app - *everything that matters*
     - analysis - *diversity caluclation and plotting*
     - constants - *app-wide constants defined*
     - ga - *fitness calculations, genetic operators, parameters*
