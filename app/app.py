@@ -28,6 +28,7 @@ def main(events: Dict[uuid.UUID, Event], print_results: bool = False, plot_resul
          plot_file: str = '', print_hamming: bool = False) -> Results:
     """
     Main program. Runs the EA.
+
     Args:
         events: A dict of event objects describing the schedule.
         print_results: Set to True to print results to console.
